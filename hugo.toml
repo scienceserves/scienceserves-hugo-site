@@ -157,5 +157,5 @@ theme = "hugo-fresh"
       icon = "github"
     
     [[params.footer.socialmedia]]
-      link = "https://linkedin.com/kristi-pullen-fedinick"
+      link = "https://linkedin.com/in/kristi-pullen-fedinick"
       icon = "linkedin"
