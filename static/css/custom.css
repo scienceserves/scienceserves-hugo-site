@@ -1,0 +1,14 @@
+/* Custom CSS to force columns to wrap sooner than Bulma's default 
+   This fixes overflow issues when the browser is zoomed or at a narrow desktop width. */
+@media screen and (max-width: 1100px) {
+    /* Target the columns wrapper to ensure wrapping at 1100px */
+    .responsive-fix-columns {
+        flex-wrap: wrap; 
+    }
+    
+    /* Target the individual columns within the wrapper */
+    .responsive-fix-columns > .column {
+        /* Force each column to take exactly half the width (50%) */
+        width: 50% !important;
+    }
+}

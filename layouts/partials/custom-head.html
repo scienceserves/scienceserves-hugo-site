@@ -360,4 +360,16 @@
     transform: translateY(-3px);
 }
 
+/* Fix for Extreme Zoom / Narrow Desktop: Force full vertical stacking */
+@media screen and (max-width: 1400px) {
+    /* Target the individual columns inside the responsive-fix-columns container */
+    .responsive-fix-columns > .column {
+        /* Force full width (100%), putting them one-per-row */
+        width: 100% !important; 
+        /* Reset Bulma's column padding for a cleaner look when stacked */
+        padding-left: 1.5rem !important; 
+        padding-right: 1.5rem !important; 
+    }
+}
+
 </style>

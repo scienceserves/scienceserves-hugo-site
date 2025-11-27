@@ -10,9 +10,9 @@
       <div class="divider is-centered"></div>
     </div>
     <div class="content-wrapper">
-      <div class="columns">
+      <div class="columns is-multiline is-variable is-6 responsive-fix-columns">
         {{- range $tiles }}
-        <div class="column is-one-third">
+        <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
           <div class="feature-card is-bordered revealOnScroll delay-1" data-animation="fadeInLeft">
             <div class="card-icon has-text-centered">
                 <img src="{{ printf "images/illustrations/icons/%s.png" .icon | relURL }}" style="width: 40
@@ -26,9 +26,9 @@
                 <p><em>{{ .subtitle }}</em></p>
             </div>
             {{ end }}
-            <div class="card-text">
-                <p>{{ .text }}</p>
-            </div>
+           <div class="card-text" style="margin: 0 10px;">
+            <p>{{ .text }}</p>
+          </div>
           </div>
         </div>
         {{- end }}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Interactive Maps on Science Serves</title>
+    <link>http://localhost:1313/maps/</link>
+    <description>Recent content in Interactive Maps on Science Serves</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="http://localhost:1313/maps/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MSX Map Analysis</title>
+      <link>http://localhost:1313/maps/msx/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/maps/msx/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SSE4 Pipeline Analysis</title>
+      <link>http://localhost:1313/maps/sse4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/maps/sse4/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
