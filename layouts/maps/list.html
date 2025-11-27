@@ -1,0 +1,80 @@
+{{ define "main" }}
+
+<div class="force-nav-dark" style="background-color: #F0FAFC;">
+  {{ partial "navbar.html" . }}
+</div>
+
+<section class="section" style="background-color: #F0FAFC; min-height: 90vh;">
+  <div class="container">
+    
+    <div class="has-text-centered" style="margin-top: 1rem; margin-bottom: 4rem;">
+      <h1 class="title is-2" style="color: #1D5B58; font-weight: 800;">
+        {{ .Title }}
+      </h1>
+      <p class="subtitle is-5" style="color: #5d6d7e; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+        {{ .Params.description }}
+      </p>
+      <div class="divider is-centered" style="background-color: #FF6B35; height: 4px; width: 60px; margin: 1.5rem auto;"></div>
+    </div>
+
+    <div class="columns is-multiline is-centered">
+  
+      <div class="column is-5">
+        <div class="card" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(29, 91, 88, 0.08); border: 2px solid #FF6B35; height: 100%; background: #ffffff; overflow: hidden;">
+          
+          <div class="card-image">
+            <figure class="image is-2by1">
+              <img src="/images/msx-preview.jpg" alt="MSX Map Preview" style="object-fit: cover;">
+            </figure>
+          </div>
+
+          <div class="card-content has-text-centered" style="padding: 2rem;">
+            
+            <h3 class="title is-4" style="color: #1D5B58; margin-top: 0.5rem;">MSX Map</h3>
+            <p class="content" style="margin-bottom: 2rem; color: #555;">Explore community vulnerability near the proposed MSX pipeline.</p>
+            
+            <a href="/maps/msx" class="button is-medium" style="background-color: #FF6B35; color: white; border-radius: 50px; border: none; font-weight: 700; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+              View MSX Map
+            </a>
+  
+          </div>
+        </div>
+      </div>
+    
+     {{/* <div class="column is-5">
+        <div class="card" style="border-radius: 12px; box-shadow: 0 4px 15px rgba(29, 91, 88, 0.08); border: 2px solid #FF6B35; height: 100%; background: #ffffff;">
+          <div class="card-content has-text-centered" style="padding: 3rem 2rem;">
+            
+            <span class="icon is-large" style="margin-bottom: 1.5rem; color: #FF6B35;">
+              <i class="fas fa-layer-group fa-3x"></i>
+            </span>
+    
+            <h3 class="title is-4" style="color: #1D5B58; margin-top: 1rem;">SSE4 Map</h3>
+            <p class="content" style="margin-bottom: 2rem; color: #555;">Interactive SSE4 spatial data and visualizations.</p>
+            
+            <a href="LINK-TO-SSE4-MAP" class="button is-medium" style="background-color: #FF6B35; color: white; border-radius: 50px; border: none; font-weight: 700; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+              View SSE4 Map
+            </a>
+    */}}
+          </div>
+        </div>
+      </div>
+    
+    </div>
+
+  </div>
+</section>
+
+<style>
+.force-nav-dark .navbar-item,
+.force-nav-dark .navbar-link {
+    color: #1D5B58 !important; /* Forces menu text to Deep Teal */
+}
+.force-nav-dark .navbar-item:hover {
+    color: #FF6B35 !important; /* Hover becomes Tangerine */
+}
+/* If you have a logo that is white-only, you might need to swap it, 
+   but usually SVG logos handle this or you have a colored version. */
+</style>
+
+{{ end }}

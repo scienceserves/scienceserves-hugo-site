@@ -1,0 +1,161 @@
+baseURL = "http://localhost:1313/"
+languageCode = "en-us"
+title = "Science Serves"
+theme = "hugo-fresh"
+
+# Hugo Modules configuration
+[module]
+  [[module.imports]]
+    path = "github.com/StefMa/hugo-fresh"
+  [[module.imports]]
+    path = "github.com/jgthms/bulma"
+
+[params]
+  fontawesome_version = "6.1.2"
+  customCSS = ["/css/custom.css"]
+  
+  [params.font]
+    name = "Open Sans"
+    sizes = [400, 600]
+  
+  # Logo and branding
+  [params.hero]
+    title = "Center for Science, Service, and Solidarity"
+    subtitle = "Science for the Common Good"
+    #buttontext = "Get Started"
+    #buttonlink = "#features"
+    image = "illustrations/hero.jpg"
+
+  # Navigation
+  [params.navbarlogo]
+    image = "images/logo.png"
+    link = "/"
+  
+  [[params.navbar]]
+    title = "Mission"
+    url = "/#section1"
+  
+  [[params.navbar]]
+    title = "About"
+    url = "/#section2"
+  
+  [[params.navbar]]
+    title = "Maps"
+    url = "/maps"
+  
+  [[params.navbar]]
+    title = "Contact"
+    url = "/#section4"
+
+  # Section 1 - Mission
+  [params.section1]
+    title = "Our Mission"
+    subtitle = "The way we approach our work"
+    
+    [[params.section1.tiles]]
+      title = "Community-Driven Research"
+      icon = "users"
+      subtitle = "Research starts with community priorities."
+	  text = "We start by listening to those most affected by environmental and health challenges. Our research is co-created with communities, ensuring priorities reflect lived experience and local expertise. This approach honors participation, transparency, and shared power."
+     #url = "#"
+      #buttonText = "Learn more"
+    
+    [[params.section1.tiles]]
+      title = "Evidence for Action"
+      icon = "chart-line"
+      subtitle = "Data as a tool for justice"
+	  text = "Evidence should drive change, not just analysis. We embed ethics and equity in every step of the scientific process, transforming data into maps, reports, and strategies that strengthen advocacy and inform policy for systemic justice."
+      #url = "#"
+      #buttonText = "Learn more"
+    
+    [[params.section1.tiles]]
+      title = "Justice-Centered Science"
+      icon = "balance-scale"
+      subtitle= "Science accountable to equity"
+	  text = "We challenge the status quo by grounding science in solidarity and justice. Every method and outcome reflects our commitment to dismantling inequities and advancing the common good, guided by principles of fairness and participation."
+      #url = "#"
+      #buttonText = "Learn more"
+
+  # Section 2 - About
+  [params.section2]
+    title = "About Us"
+    subtitle = "The Center for Science, Service, and Solidarity (CS³) is a values-driven organization dedicated to making science accessible and actionable for the common good. We believe data and evidence should serve people—not the other way around. Our work combines rigorous analysis with community wisdom to create tools that matter. Through research partnerships, technical support, education, and mentoring, we help communities and organizations understand environmental and public health risks, advocate for systemic change, and build capacity for long-term resilience. Every project is grounded in humility, collaboration, and a commitment to justice."
+    
+    [[params.section2.features]]
+      title = "Research Partnerships"
+      text = "Collaborating with communities to co-design studies and share power."
+      icon = "laptop-code"
+    
+    [[params.section2.features]]
+      title = "Technical Support"
+      text = "Providing strategic advising and analytical methods for advocacy and planning."
+      icon = "technical"
+    
+    [[params.section2.features]]
+      title = "Education & Capacity Building"
+      text = "Training communities and organizations to use science for systemic change."
+      icon = "education"
+	
+  	[[params.section2.features]]
+      title = "Mentoring & Leadership Development"
+      text = "Supporting emerging leaders and scientists committed to equity and justice."
+      icon = "mentoring"
+	  
+	[[params.section2.features]]
+      title = "Policy & Advocacy Tools"
+      text = "Translating research and evidence into strategies for equity and justice."
+      icon = "tools"
+	  
+
+
+# Section 3 - Maps Teaser
+  [params.section3]
+    title = "Interactive Maps"
+    subtitle = "Explore our data visualizations."
+    
+    # This is the image file you need to put in static/images/
+    image = "map-preview.png" 
+    
+    # The Button
+    buttontext = "View All Maps"
+    
+    # This links to your new page (we will create this next)
+    buttonlink = "/maps"
+
+  # Section 4 - Contact/Call to Action
+  [params.section4]
+    title = "Get in Touch"
+    subtitle = "Interested in collaborating or learning more about our work? We'd love to hear from you."
+    buttontext = "Contact Us"
+    buttonlink = "mailto:info@scienceserves.org"
+
+  # Footer Configuration
+  [params.footer]
+    logo = "logo.svg" # Make sure this file is in static/images/logos/
+    socialmediatitle = "Follow Us"
+
+    # --- THIS IS YOUR NEW CREDITS SECTION ---
+    [[params.footer.quicklinks]]
+      title = "Image Credits"
+      
+	[[params.footer.quicklinks.links]]
+      text = "**Illustration** by pch.vector / Freepik"
+      link = "http://www.freepik.com"
+
+[[params.footer.quicklinks.links]]
+      text = "**About Us Photo** by Jopwell / Pexels"
+      link = "https://www.pexels.com/photo/women-and-man-on-sofa-2422288/"
+
+      [[params.footer.quicklinks.links]]
+        text = "Icons via IconStore"
+        link = "https://iconstore.co"
+    # ----------------------------------------
+
+    # Social Media Links (Keep these as you have them)
+    [[params.footer.socialmedia]]
+      link = "https://github.com/scienceserves"
+      icon = "github"
+    
+    [[params.footer.socialmedia]]
+      link = "https://linkedin.com/kristi-pullen-fedinick"
+      icon = "linkedin"

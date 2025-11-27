@@ -1,0 +1,36 @@
+{{- $footer := .Site.Params.footer }}
+{{- $logo := index $footer "logo" }}
+{{- $quickLinks := index $footer "quicklinks" }} 
+{{- $socialMedia := index $footer "socialmedia" }}
+{{- $socialMediaTitle := index $footer "socialmediatitle" }}
+
+<footer class="footer footer-dark">
+  <div class="container">
+    
+    <div class="columns is-centered">
+
+      <div class="column is-4 has-text-centered">
+        <div class="footer-column">
+          <div class="footer-header">
+            <h3>{{ $socialMediaTitle }}</h3>
+			<nav class="level is-mobile is-centered">
+			  {{- range $socialMedia }}
+			  <a class="level-item" href="{{ .link }}">
+				<span class="icon"><i class="fa fa-{{ .icon }}"></i></span>
+			  </a>
+			  {{- end }}
+			</nav>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="has-text-centered" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <p class="is-size-7 light-text" style="opacity: 0.7;">
+            Image Credits: Illustration by pch.vector / Freepik | About Us Photo by jopwell / Pexels | Icons from flaticon
+        </p>
+    </div>
+
+  </div>
+</footer>

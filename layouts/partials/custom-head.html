@@ -1,0 +1,363 @@
+<style>
+/* Keep the hero image styles - updated for is-6 column */
+.hero-body .column.is-7 figure.image {
+  padding-top: 0 !important;
+  height: auto !important;
+  max-width: none !important;
+}
+
+.hero-body .column.is-7 figure.image img {
+  position: static !important;
+  max-width: 120% !important;
+  width: 120% !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+/* Text logo styling */
+.navbar-brand .navbar-item img {
+  display: none; /* Hide the broken logo image */
+}
+
+.navbar-brand .navbar-item::after {
+  content: "CS³";
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #2E7D32 0%, #1976D2 50%, #00897B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 2px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* ---- Center the header ---- */
+.hero-body .title,
+.hero-body .subtitle {
+  text-align: center;
+}
+
+
+/* ---- Section 1 Customizations ---- */
+
+
+.feature-card .card-icon img {
+  width: 100px !important; /* or 80px if you want bigger */
+  height: auto !important; /* keeps original proportions */
+  margin-top: 3rem;
+}
+
+.feature-card {
+  min-height: 470px; /* or 480px for more space */
+  width: 90%; /* slightly wider inside its column */
+  margin: 0 auto; /* center the box in the column */
+/* border-radius: 8px; */
+  background: none;
+  border: none;
+  box-shadow: none;
+  background: #fff; /* keep white background */
+/* border: 1px solid #ddd; /* optional border */
+/* box-shadow: 0 4px 12px rgba(0,0,0,0.08); */
+}
+
+
+/* Title styling */
+.feature-card .card-title h4 {
+  margin: 0 auto; /* space above */
+  max-width: 90%;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #FF6B35;
+  text-align: center;
+}
+
+
+/* Subtitle styling */
+.feature-card .card-subtitle p {
+  margin: .5rem  auto; /*top/bottom same as before*/
+  max-width: 90%;
+  font-size: 1rem;
+  font-weight: bold;
+  font-style: italic;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* Body text spacing */
+.feature-card .card-text p {
+  margin: 0.5rem auto;
+  max-width: 100%;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: left; /* if you want left-aligned text */
+}
+
+
+/* ---- Section 2 Customizations ---- */
+
+/* 1. Target ONLY the feature columns, not the About Us column */
+#section2 .feature-column {
+  display: flex; /* Stretches the content height */
+  padding: 1rem; /* Spacing between columns */
+}
+
+/* 2. The Item Container (Grey Card Style) */
+#section2 .feature-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+  
+  /* --- NEW CARD STYLING --- */
+  background-color: #fffff;  /* Clean Light Grey */
+  border: 1px solid #F9C74F;  /* Subtle darker grey border */
+  border-radius: 8px;         /* Rounded corners */
+  padding: 1.5rem;            /* Spacing inside the box */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Very soft shadow */
+  
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover Effect (Pop up slightly like Mission section) */
+#section2 .feature-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  border-color: #D1D5DA; /* Slightly darker border on hover */
+}
+
+/* 3. The Title Shelf (Alignment Fix) */
+/* (Keep this logic, but you might want to adjust height slightly if needed) */
+#section2 .feature-header {
+  min-height: 5rem; /* Keeps the titles aligned */
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+#section2 .feature-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1D5B58; /* Using your accent orange, or switch to #004B6D */
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* 4. The Body Text */
+#section2 .feature-body {
+  flex-grow: 1;
+  font-size: 1.2rem;
+  color: #333333;
+  line-height: 1.6;
+}
+
+/* Fix for markdownify paragraphs */
+#section2 .feature-body p {
+  margin-bottom: 0;
+}
+
+/* ---- Section 2: About Us Text Styling ---- */
+
+.about-text {
+  /* 1. Left Justify */
+  text-align: left;
+  
+  /* 2. Add Margin to top (space between divider and text) */
+  margin-top: 0rem; 
+  
+  /* 3. Custom Text Styling (override default subtitle look) */
+  font-family: 'Open Sans', sans-serif; /* Example font */
+  font-size: 1.1rem;      /* Slightly larger than standard body text */
+  line-height: 1.8;       /* More breathing room between lines */
+  color: #333333;         /* Darker gray (easy to read) */
+  font-weight: 400;       /* Normal weight (not bold) */
+}
+
+/* Optional: If you want the text to wrap around the image on mobile */
+@media (max-width: 768px) {
+  .about-text {
+    text-align: center; /* Usually looks better centered on mobile */
+    margin-top: 1rem;
+  }
+}
+
+
+/* ---- Section 3: Interactive Maps (Joyful Pop) ---- */
+
+/* 1. Background & Spacing */
+#section3 {
+    background-color: #F0FAFC !important; /* Ice Mint */
+    color: #1D5B58; /* Deep Teal Text */
+    padding: 4rem 1.5rem;
+}
+
+/* 2. Map Image Styling (The "Laptop" Look) */
+#section3 .pushed-image {
+    border-radius: 12px; /* Smooth corners */
+    /* Deep Teal shadow for depth */
+    box-shadow: 0 15px 35px rgba(29, 91, 88, 0.15); 
+    border: 4px solid #ffffff; /* Crisp white border frame */
+    transition: transform 0.3s ease;
+    max-width: 100%;
+    height: auto;
+}
+
+#section3 .pushed-image:hover {
+    transform: translateY(-5px); /* Floats up slightly on hover */
+}
+
+/* 3. Typography */
+#section3 .title {
+    color: #1D5B58 !important; /* Deep Teal */
+    font-weight: 800;
+    margin-top: 2.5rem; /* Space between image and title */
+}
+
+#section3 .subtitle {
+    color: #5d6d7e !important; /* Slightly softer grey for description */
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* 4. The Button (Matches Section 4 style) */
+#section3 .cta {
+    background-color: #FF6B35 !important; /* Tangerine */
+    color: #ffffff !important;
+    border: none;
+    font-weight: 700;
+    padding: 1.25rem 3rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3); /* Orange shadow */
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+}
+
+#section3 .cta:hover {
+    background-color: #F9C74F !important; /* Sunshine Yellow */
+    color: #1D5B58 !important; /* Deep Teal text on hover */
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(249, 199, 79, 0.4);
+}
+
+/* ---- Section 4: Get in Touch (Joyful Pop) ---- */
+
+/* 1. The Banner Background */
+#section4 {
+    /* Background: Deep Teal */
+    background-color: #96D9C8 !important; 
+    color: #ffffff; /* Ensure text is white */
+}
+
+/* 2. BIGGER Title & Subtitle */
+#section4 .title-wrapper .title {
+    color: #1D5B58 !important;
+    font-size: 3.5rem !important; /* Increased from ~2.5rem */
+    font-weight: 800; /* Extra bold */
+    margin-bottom: 1.5rem; /* More space below title */
+}
+
+#section4 .title-wrapper .subtitle {
+    color: #1D5B58 !important; /* Using Ice Mint for subtitle */
+    font-size: 1.5rem !important; /* Increased from ~1.25rem */
+    line-height: 1.6;
+    max-width: 800px; /* Prevents text from getting too wide to read */
+    margin-left: auto;
+    margin-right: auto;
+	margin-bottom: 0rem;
+}
+
+/* 2. The Contact Button Styling */
+.contact-wrapper {
+    margin-top: 0rem; /* Space between testimonials and button */
+}
+
+.cta-button {
+    /* Button Base: Vibrant Tangerine */
+    background-color: #FF6B35 !important;
+    color: #ffffff !important;
+    
+    font-weight: 500;
+    border: none;
+    padding: 1.5rem 2rem; /* Make it big and clickable */
+    border-radius: 50px; /* Fully rounded pill shape */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* 3. Button Hover Effect */
+.cta-button:hover {
+    /* Hover: Sunshine Yellow */
+    background-color: #F9C74F !important;
+    
+    /* Change text to Teal on hover for contrast */
+    color: #1D5B58 !important; 
+    
+    transform: translateY(-3px); /* Float up slightly */
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+}
+
+/* 4. Testimonial Text Color Fix (If you keep them) */
+/* This ensures the testimonial quotes are readable on the dark teal */
+#section4 .testimonial blockquote {
+    color: #F0FAFC !important; /* Ice Mint text */
+    font-style: italic;
+    opacity: 0.9;
+}
+#section4 .testimonial .author h5 {
+    color: #ffffff !important; /* Name is white */
+}
+#section4 .testimonial .author span {
+    color: #F9C74F !important; /* Job title is Sunshine Yellow */
+}
+
+/* ---- Footer Customization (Joyful Pop) ---- */
+
+/* 1. Override the Dark Background */
+.footer.footer-dark {
+    background-color: #1d5b58 !important; /* Ice Mint */
+    color: #ffffff !important; /* Deep Teal */
+    padding: 3rem 1.5rem;
+}
+
+/* 2. Text & Header Styling */
+.footer-header h3 {
+    color: #ffffff !important; /* Deep Teal Headers */
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* 3. Link Styling (Credits) */
+.footer .credits-list li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.footer .credits-list a {
+    color: #ffffff !important; /* Tangerine for links */
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.footer .credits-list a:hover {
+    color: #F9C74F !important; /* Sunshine Yellow on hover */
+    text-decoration: underline;
+}
+
+/* 4. Social Media Icons */
+.footer .level-item .icon {
+    color: #FF6B35 !important; /* Tangerine Icons */
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+.footer .level-item:hover .icon {
+    color: #F9C74F !important; /* Sunshine Yellow on hover */
+    transform: translateY(-3px);
+}
+
+</style>

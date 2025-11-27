@@ -1,0 +1,48 @@
+{{- $section2 := .Site.Params.section2 -}}
+{{- $title    := index $section2 "title" -}}
+{{- $subtitle := index $section2 "subtitle" -}}
+{{- $features := index $section2 "features" -}}
+
+<section class="section is-medium" id="section2">
+  <div class="container">
+
+    <div class="columns is-centered">
+      <div class="column is-12 has-text-centered">
+      <h2 class="title is-2">{{ $title }}</h2>
+        <div class="divider is-centered"></div>
+      </div>
+    </div>
+
+    <div class="columns is-vcentered" style="margin-bottom: 3rem;">
+      
+      <div class="column is-4">
+        <figure class="image is-4by3">
+           <img src="{{ "images/about-us.jpg" | relURL }}" alt="About Us Image" style="object-fit: cover; border-radius: 8px;">
+        </figure>
+      </div>
+
+      <div class="column is-8">
+        <div class="about-text">
+          {{ $subtitle | markdownify }}
+        </div>
+      </div>
+
+    </div>
+
+    <div class="columns is-multiline is-centered">
+      {{- range $features }}
+      <div class="column is-one-fifth has-text-centered feature-column">
+        <div class="feature-item">
+          <div class="feature-header">
+            <h4 class="feature-title">{{ .title }}</h4>
+          </div>
+          <div class="feature-body">
+            {{ .text | markdownify }}
+          </div>
+        </div>
+      </div>
+      {{- end }}
+    </div>
+
+  </div>
+</section>
