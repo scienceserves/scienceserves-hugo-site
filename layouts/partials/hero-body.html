@@ -1,34 +1,40 @@
-{{- $hero       := .Site.Params.hero }}
-{{- $title      := index $hero "title" }}
-{{- $subtitle   := index $hero "subtitle" }}
+{{- $hero := .Site.Params.hero }}
+{{- $title := index $hero "title" }}
+{{- $subtitle := index $hero "subtitle" }}
 {{- $buttonText := index $hero "buttontext" }}
 {{- $buttonLink := index $hero "buttonlink" }}
-{{- $image      := index $hero "image" }}
+{{- $image := index $hero "image" }}
 <div class="hero-body">
-  <div class="container">
-    <div class="columns is-vcentered">
-      <div class="column is-5 landing-caption">
-        <h1 class="title is-1 is-bold is-spaced">
-          {{ $title }}
-        </h1>
-        {{ with $subtitle }}
-        <h2 class="subtitle is-5 is-muted">
-          {{ . }}
-        </h2>
-        {{ end }}
-        {{ if $buttonText }}
-        <p>
-          <a class="button cta rounded primary-btn raised" href="{{ $buttonLink }}">
-            {{ $buttonText }}
-          </a>
-        </p>
-        {{ end }}
-      </div>
-      <div class="column is-7">
-        <figure class="image is-4by3">
-          <img src="{{ printf "images/%s" $image | relURL }}" alt="Description">
-        </figure>
-      </div>
+ <div class="container">
+  <div class="columns is-vcentered">
+   <div class="column is-5 landing-caption">
+    <h1 class="title is-1 is-bold is-spaced">
+     {{ $title }}
+    </h2>
+    <div class="cs3-divider">
+     <span class="divider-line"></span>
+     <span class="cs3-text">CS³</span>
+     <span class="divider-line"></span>
     </div>
+	</h1>
+    {{ with $subtitle }}
+    <h2 class="subtitle is-5 is-muted">
+     <em>{{ . }}</em>
+    
+    {{ end }}
+    {{ if $buttonText }}
+    <p>
+     <a class="button cta rounded primary-btn raised" href="{{ $buttonLink }}">
+      {{ $buttonText }}
+     </a>
+    </p>
+    {{ end }}
+   </div>
+   <div class="column is-7">
+    <figure class="image is-4by3">
+     <img src="{{ printf "images/%s" $image | relURL }}" alt="Description">
+    </figure>
+   </div>
   </div>
+ </div>
 </div>
