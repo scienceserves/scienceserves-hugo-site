@@ -1,0 +1,1385 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet.photon.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Community Vulnerability Near the Proposed MSX Pipeline</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.photon.js"></script>
+        <script src="data/Counties_1.js"></script>
+        <script src="data/Censustracts_2.js"></script>
+        <script src="data/PopulationDemographics_3.js"></script>
+        <script src="data/PropertiesatRiskofFloodRisk30yearspercentile_4.js"></script>
+        <script src="data/ExpectedBuildingLossRatepercentile_5.js"></script>
+        <script src="data/AgriculturalLossRatepercentile_6.js"></script>
+        <script src="data/PercentUnemployment_7.js"></script>
+        <script src="data/PercentofPeople200BelowFederalPovertyLine_8.js"></script>
+        <script src="data/PercentofPeople100BelowFederalPovertyLinepercentile_9.js"></script>
+        <script src="data/EnergyBurdenpercentile_10.js"></script>
+        <script src="data/ExpectedPopulationLossRatepercentile_11.js"></script>
+        <script src="data/DOTTravelBarrierScorepercentile_12.js"></script>
+        <script src="data/LowLifeExpectancypercentile_13.js"></script>
+        <script src="data/DiagnosedDiabetespercentile_14.js"></script>
+        <script src="data/CurrentAsthmaAmongAdultspercentile_15.js"></script>
+        <script src="data/CoronaryHeartDiseasepercentile_16.js"></script>
+        <script src="data/ProposedMSXpipelineroute_17.js"></script>
+        <script src="data/ProposedMSXCompressorStations_18.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:22, minZoom:1
+        }).fitBounds([[29.419033072272477,-95.94749854585156],[35.46697240270891,-82.4116004374563]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // modify popup if contains media
+        function addClassToPopupIfMedia(content, popup) {
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            var imgTd = tempDiv.querySelector('td img');
+            if (imgTd) {
+                var src = imgTd.getAttribute('src');
+                if (/\.(jpg|jpeg|png|gif|bmp|webp|avif)$/i.test(src)) {
+                    popup._contentNode.classList.add('media');
+                    setTimeout(function() {
+                        popup.update();
+                    }, 10);
+                } else if (/\.(mp3|wav|ogg|aac)$/i.test(src)) {
+                    var audio = document.createElement('audio');
+                    audio.controls = true;
+                    audio.src = src;
+                    imgTd.parentNode.replaceChild(audio, imgTd);
+                    popup._contentNode.classList.add('media');
+                    setTimeout(function() {
+                        popup.setContent(tempDiv.innerHTML);
+                        popup.update();
+                    }, 10);
+                } else if (/\.(mp4|webm|ogg|mov)$/i.test(src)) {
+                    var video = document.createElement('video');
+                    video.controls = true;
+                    video.src = src;
+                    video.style.width = "400px";
+                    video.style.height = "300px";
+                    video.style.maxHeight = "60vh";
+                    video.style.maxWidth = "60vw";
+                    imgTd.parentNode.replaceChild(video, imgTd);
+                    popup._contentNode.classList.add('media');
+                    // Aggiorna il popup quando il video carica i metadati
+                    video.addEventListener('loadedmetadata', function() {
+                        popup.update();
+                    });
+                    setTimeout(function() {
+                        popup.setContent(tempDiv.innerHTML);
+                        popup.update();
+                    }, 10);
+                } else {
+                    popup._contentNode.classList.remove('media');
+                }
+            } else {
+                popup._contentNode.classList.remove('media');
+            }
+        }
+        var title = new L.Control({'position':'topright'});
+        title.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+        title.update = function () {
+            this._div.innerHTML = '<h2>Community Vulnerability Near the Proposed MSX Pipeline</h2>';
+        };
+        title.addTo(map);
+        var abstract = new L.Control({'position':'bottomleft'});
+        abstract.onAdd = function (map) {
+            this._div = L.DomUtil.create('div',
+            'leaflet-control abstract');
+            this._div.id = 'abstract'
+                this._div.setAttribute("onmouseenter", "abstract.show()");
+                this._div.setAttribute("onmouseleave", "abstract.hide()");
+                this.hide();
+                return this._div;
+            };
+            abstract.hide = function () {
+                this._div.classList.remove("abstractUncollapsed");
+                this._div.classList.add("abstract");
+                this._div.innerHTML = 'i'
+            }
+            abstract.show = function () {
+                this._div.classList.remove("abstract");
+                this._div.classList.add("abstractUncollapsed");
+                this._div.innerHTML = 'Data on this map is organized into three distinct categories and comes from the federal Climate and Economic Justice Screening Tool (CEJST). <br />The shading reflects percentiles, meaning it helps identify communities facing disproportionately high burdens.<br />- A lighter color indicates an area is in the 75th percentile for a variable<br />- A darker color signals the 90th percentile, pinpointing those communities with the most severe needs.<br />CEJST can be found at https://screening-tools.com/climate-economic-justice-screening-tool';
+        };
+        abstract.addTo(map);
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            map.setMaxBounds(map.getBounds());
+            map.setMinZoom(map.getZoom());
+        }
+        map.createPane('pane_Cartopositron_0');
+        map.getPane('pane_Cartopositron_0').style.zIndex = 400;
+        var layer_Cartopositron_0 = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Cartopositron_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 22,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_Cartopositron_0;
+        map.addLayer(layer_Cartopositron_0);
+        function pop_Counties_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NAME</th>\
+                        <td class="visible-with-data" id="NAME">' + (feature.properties['NAME'] !== null ? autolinker.link(String(feature.properties['NAME']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Counties_1_0() {
+            return {
+                pane: 'pane_Counties_1',
+                opacity: 1,
+                color: 'rgba(217,217,217,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(164,113,88,0.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Counties_1');
+        map.getPane('pane_Counties_1').style.zIndex = 401;
+        map.getPane('pane_Counties_1').style['mix-blend-mode'] = 'normal';
+        var layer_Counties_1 = new L.geoJson(json_Counties_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Counties_1',
+            layerName: 'layer_Counties_1',
+            pane: 'pane_Counties_1',
+            onEachFeature: pop_Counties_1,
+            style: style_Counties_1_0,
+        });
+        bounds_group.addLayer(layer_Counties_1);
+        map.addLayer(layer_Counties_1);
+        function pop_Censustracts_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Percent Black or African American</th>\
+                        <td>' + (feature.properties['DM_B'] !== null ? autolinker.link(String(feature.properties['DM_B']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent American Indian / Alaska Native</th>\
+                        <td>' + (feature.properties['DM_AI'] !== null ? autolinker.link(String(feature.properties['DM_AI']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent Asian</th>\
+                        <td>' + (feature.properties['DM_A'] !== null ? autolinker.link(String(feature.properties['DM_A']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent Native Hawaiian or Pacific</th>\
+                        <td>' + (feature.properties['DM_HI'] !== null ? autolinker.link(String(feature.properties['DM_HI']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent two or more races</th>\
+                        <td>' + (feature.properties['DM_T'] !== null ? autolinker.link(String(feature.properties['DM_T']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent White</th>\
+                        <td>' + (feature.properties['DM_W'] !== null ? autolinker.link(String(feature.properties['DM_W']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent Hispanic or Latino</th>\
+                        <td>' + (feature.properties['DM_H'] !== null ? autolinker.link(String(feature.properties['DM_H']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent other races</th>\
+                        <td>' + (feature.properties['DM_O'] !== null ? autolinker.link(String(feature.properties['DM_O']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent age under 10</th>\
+                        <td>' + (feature.properties['AGE_10'] !== null ? autolinker.link(String(feature.properties['AGE_10']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent age 10 to 64</th>\
+                        <td>' + (feature.properties['AGE_MIDDLE'] !== null ? autolinker.link(String(feature.properties['AGE_MIDDLE']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent age over 64</th>\
+                        <td>' + (feature.properties['AGE_OLD'] !== null ? autolinker.link(String(feature.properties['AGE_OLD']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Number of Tribal areas within Census tract</th>\
+                        <td>' + (feature.properties['TA_COUNT_C'] !== null ? autolinker.link(String(feature.properties['TA_COUNT_C']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent of the Census tract that is within Tribal areas</th>\
+                        <td>' + (feature.properties['TA_PERC'] !== null ? autolinker.link(String(feature.properties['TA_PERC']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Censustracts_2_0() {
+            return {
+                pane: 'pane_Censustracts_2',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.6980392156862745)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(173,181,189,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Censustracts_2');
+        map.getPane('pane_Censustracts_2').style.zIndex = 402;
+        map.getPane('pane_Censustracts_2').style['mix-blend-mode'] = 'normal';
+        var layer_Censustracts_2 = new L.geoJson(json_Censustracts_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Censustracts_2',
+            layerName: 'layer_Censustracts_2',
+            pane: 'pane_Censustracts_2',
+            onEachFeature: pop_Censustracts_2,
+            style: style_Censustracts_2_0,
+        });
+        bounds_group.addLayer(layer_Censustracts_2);
+        map.addLayer(layer_Censustracts_2);
+        function pop_PopulationDemographics_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Total population</th>\
+                        <td class="visible-with-data" id="TPF">' + (feature.properties['TPF'] !== null ? autolinker.link(String(feature.properties['TPF']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent Black or African American</th>\
+                        <td>' + (feature.properties['DM_B'] !== null ? autolinker.link(String(feature.properties['DM_B']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent American Indian / Alaska Native</th>\
+                        <td>' + (feature.properties['DM_AI'] !== null ? autolinker.link(String(feature.properties['DM_AI']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent Asian</th>\
+                        <td>' + (feature.properties['DM_A'] !== null ? autolinker.link(String(feature.properties['DM_A']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent Native Hawaiian or Pacific</th>\
+                        <td>' + (feature.properties['DM_HI'] !== null ? autolinker.link(String(feature.properties['DM_HI']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent two or more races</th>\
+                        <td>' + (feature.properties['DM_T'] !== null ? autolinker.link(String(feature.properties['DM_T']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent White</th>\
+                        <td>' + (feature.properties['DM_W'] !== null ? autolinker.link(String(feature.properties['DM_W']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent Hispanic or Latino</th>\
+                        <td>' + (feature.properties['DM_H'] !== null ? autolinker.link(String(feature.properties['DM_H']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent other races</th>\
+                        <td>' + (feature.properties['DM_O'] !== null ? autolinker.link(String(feature.properties['DM_O']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent age under 10</th>\
+                        <td>' + (feature.properties['AGE_10'] !== null ? autolinker.link(String(feature.properties['AGE_10']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent age 10 to 64</th>\
+                        <td>' + (feature.properties['AGE_MIDDLE'] !== null ? autolinker.link(String(feature.properties['AGE_MIDDLE']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Percent age over 64</th>\
+                        <td>' + (feature.properties['AGE_OLD'] !== null ? autolinker.link(String(feature.properties['AGE_OLD']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PopulationDemographics_3_0() {
+            return {
+                pane: 'pane_PopulationDemographics_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(167,165,150,0.8)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PopulationDemographics_3');
+        map.getPane('pane_PopulationDemographics_3').style.zIndex = 403;
+        map.getPane('pane_PopulationDemographics_3').style['mix-blend-mode'] = 'normal';
+        var layer_PopulationDemographics_3 = new L.geoJson(json_PopulationDemographics_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PopulationDemographics_3',
+            layerName: 'layer_PopulationDemographics_3',
+            pane: 'pane_PopulationDemographics_3',
+            onEachFeature: pop_PopulationDemographics_3,
+            style: style_PopulationDemographics_3_0,
+        });
+        bounds_group.addLayer(layer_PopulationDemographics_3);
+        map.addLayer(layer_PopulationDemographics_3);
+        function pop_PropertiesatRiskofFloodRisk30yearspercentile_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Share of properties at risk of flood in 30 years (percentile)</th>\
+                        <td class="visible-with-data" id="FLD_PFS">' + (feature.properties['FLD_PFS'] !== null ? autolinker.link(String(feature.properties['FLD_PFS']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PropertiesatRiskofFloodRisk30yearspercentile_4_0(feature) {
+            if (feature.properties['FLD_PFS'] >= 0.750000 && feature.properties['FLD_PFS'] <= 0.900000 ) {
+                return {
+                pane: 'pane_PropertiesatRiskofFloodRisk30yearspercentile_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(155,200,230,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['FLD_PFS'] >= 0.900000 && feature.properties['FLD_PFS'] <= 0.980000 ) {
+                return {
+                pane: 'pane_PropertiesatRiskofFloodRisk30yearspercentile_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,44,139,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_PropertiesatRiskofFloodRisk30yearspercentile_4');
+        map.getPane('pane_PropertiesatRiskofFloodRisk30yearspercentile_4').style.zIndex = 404;
+        map.getPane('pane_PropertiesatRiskofFloodRisk30yearspercentile_4').style['mix-blend-mode'] = 'normal';
+        var layer_PropertiesatRiskofFloodRisk30yearspercentile_4 = new L.geoJson(json_PropertiesatRiskofFloodRisk30yearspercentile_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PropertiesatRiskofFloodRisk30yearspercentile_4',
+            layerName: 'layer_PropertiesatRiskofFloodRisk30yearspercentile_4',
+            pane: 'pane_PropertiesatRiskofFloodRisk30yearspercentile_4',
+            onEachFeature: pop_PropertiesatRiskofFloodRisk30yearspercentile_4,
+            style: style_PropertiesatRiskofFloodRisk30yearspercentile_4_0,
+        });
+        bounds_group.addLayer(layer_PropertiesatRiskofFloodRisk30yearspercentile_4);
+        function pop_ExpectedBuildingLossRatepercentile_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Expected building loss rate (Natural Hazards Risk Index) (percentile)</th>\
+                        <td class="visible-with-data" id="EBLR_PFS">' + (feature.properties['EBLR_PFS'] !== null ? autolinker.link(String(feature.properties['EBLR_PFS']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_ExpectedBuildingLossRatepercentile_5_0(feature) {
+            if (feature.properties['EBLR_PFS'] >= 0.750000 && feature.properties['EBLR_PFS'] <= 0.900000 ) {
+                return {
+                pane: 'pane_ExpectedBuildingLossRatepercentile_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(217,237,255,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['EBLR_PFS'] >= 0.900000 && feature.properties['EBLR_PFS'] <= 0.990000 ) {
+                return {
+                pane: 'pane_ExpectedBuildingLossRatepercentile_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,84,201,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_ExpectedBuildingLossRatepercentile_5');
+        map.getPane('pane_ExpectedBuildingLossRatepercentile_5').style.zIndex = 405;
+        map.getPane('pane_ExpectedBuildingLossRatepercentile_5').style['mix-blend-mode'] = 'normal';
+        var layer_ExpectedBuildingLossRatepercentile_5 = new L.geoJson(json_ExpectedBuildingLossRatepercentile_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ExpectedBuildingLossRatepercentile_5',
+            layerName: 'layer_ExpectedBuildingLossRatepercentile_5',
+            pane: 'pane_ExpectedBuildingLossRatepercentile_5',
+            onEachFeature: pop_ExpectedBuildingLossRatepercentile_5,
+            style: style_ExpectedBuildingLossRatepercentile_5_0,
+        });
+        bounds_group.addLayer(layer_ExpectedBuildingLossRatepercentile_5);
+        function pop_AgriculturalLossRatepercentile_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Expected agricultural loss rate (Natural Hazards Risk Index) (percentile)</th>\
+                        <td class="visible-with-data" id="EALR_PFS">' + (feature.properties['EALR_PFS'] !== null ? autolinker.link(String(feature.properties['EALR_PFS']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_AgriculturalLossRatepercentile_6_0(feature) {
+            if (feature.properties['EALR_PFS'] >= 0.750000 && feature.properties['EALR_PFS'] <= 0.900000 ) {
+                return {
+                pane: 'pane_AgriculturalLossRatepercentile_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(167,244,242,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['EALR_PFS'] >= 0.900000 && feature.properties['EALR_PFS'] <= 0.990000 ) {
+                return {
+                pane: 'pane_AgriculturalLossRatepercentile_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(53,219,237,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_AgriculturalLossRatepercentile_6');
+        map.getPane('pane_AgriculturalLossRatepercentile_6').style.zIndex = 406;
+        map.getPane('pane_AgriculturalLossRatepercentile_6').style['mix-blend-mode'] = 'normal';
+        var layer_AgriculturalLossRatepercentile_6 = new L.geoJson(json_AgriculturalLossRatepercentile_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_AgriculturalLossRatepercentile_6',
+            layerName: 'layer_AgriculturalLossRatepercentile_6',
+            pane: 'pane_AgriculturalLossRatepercentile_6',
+            onEachFeature: pop_AgriculturalLossRatepercentile_6,
+            style: style_AgriculturalLossRatepercentile_6_0,
+        });
+        bounds_group.addLayer(layer_AgriculturalLossRatepercentile_6);
+        function pop_PercentUnemployment_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Unemployment (percent) (percentile)</th>\
+                        <td class="visible-with-data" id="UF_PFS">' + (feature.properties['UF_PFS'] !== null ? autolinker.link(String(feature.properties['UF_PFS']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PercentUnemployment_7_0(feature) {
+            if (feature.properties['UF_PFS'] >= 0.750000 && feature.properties['UF_PFS'] <= 0.900000 ) {
+                return {
+                pane: 'pane_PercentUnemployment_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,229,205,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['UF_PFS'] >= 0.900000 && feature.properties['UF_PFS'] <= 0.990000 ) {
+                return {
+                pane: 'pane_PercentUnemployment_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(237,127,53,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_PercentUnemployment_7');
+        map.getPane('pane_PercentUnemployment_7').style.zIndex = 407;
+        map.getPane('pane_PercentUnemployment_7').style['mix-blend-mode'] = 'normal';
+        var layer_PercentUnemployment_7 = new L.geoJson(json_PercentUnemployment_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PercentUnemployment_7',
+            layerName: 'layer_PercentUnemployment_7',
+            pane: 'pane_PercentUnemployment_7',
+            onEachFeature: pop_PercentUnemployment_7,
+            style: style_PercentUnemployment_7_0,
+        });
+        bounds_group.addLayer(layer_PercentUnemployment_7);
+        function pop_PercentofPeople200BelowFederalPovertyLine_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Percent of individuals below 200% Federal Poverty Line, imputed and adjusted (percentile)</th>\
+                        <td class="visible-with-data" id="P200_I_PFS">' + (feature.properties['P200_I_PFS'] !== null ? autolinker.link(String(feature.properties['P200_I_PFS']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PercentofPeople200BelowFederalPovertyLine_8_0(feature) {
+            if (feature.properties['P200_I_PFS'] >= 0.750000 && feature.properties['P200_I_PFS'] <= 0.900000 ) {
+                return {
+                pane: 'pane_PercentofPeople200BelowFederalPovertyLine_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,239,235,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['P200_I_PFS'] >= 0.900000 && feature.properties['P200_I_PFS'] <= 0.990000 ) {
+                return {
+                pane: 'pane_PercentofPeople200BelowFederalPovertyLine_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(237,81,28,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_PercentofPeople200BelowFederalPovertyLine_8');
+        map.getPane('pane_PercentofPeople200BelowFederalPovertyLine_8').style.zIndex = 408;
+        map.getPane('pane_PercentofPeople200BelowFederalPovertyLine_8').style['mix-blend-mode'] = 'normal';
+        var layer_PercentofPeople200BelowFederalPovertyLine_8 = new L.geoJson(json_PercentofPeople200BelowFederalPovertyLine_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PercentofPeople200BelowFederalPovertyLine_8',
+            layerName: 'layer_PercentofPeople200BelowFederalPovertyLine_8',
+            pane: 'pane_PercentofPeople200BelowFederalPovertyLine_8',
+            onEachFeature: pop_PercentofPeople200BelowFederalPovertyLine_8,
+            style: style_PercentofPeople200BelowFederalPovertyLine_8_0,
+        });
+        bounds_group.addLayer(layer_PercentofPeople200BelowFederalPovertyLine_8);
+        function pop_PercentofPeople100BelowFederalPovertyLinepercentile_9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Percent of individuals < 100% Federal Poverty Line (percentile)</th>\
+                        <td class="visible-with-data" id="P100_PFS">' + (feature.properties['P100_PFS'] !== null ? autolinker.link(String(feature.properties['P100_PFS']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_PercentofPeople100BelowFederalPovertyLinepercentile_9_0(feature) {
+            if (feature.properties['P100_PFS'] >= 0.750000 && feature.properties['P100_PFS'] <= 0.900000 ) {
+                return {
+                pane: 'pane_PercentofPeople100BelowFederalPovertyLinepercentile_9',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,197,221,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['P100_PFS'] >= 0.900000 && feature.properties['P100_PFS'] <= 0.990000 ) {
+                return {
+                pane: 'pane_PercentofPeople100BelowFederalPovertyLinepercentile_9',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,29,119,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_PercentofPeople100BelowFederalPovertyLinepercentile_9');
+        map.getPane('pane_PercentofPeople100BelowFederalPovertyLinepercentile_9').style.zIndex = 409;
+        map.getPane('pane_PercentofPeople100BelowFederalPovertyLinepercentile_9').style['mix-blend-mode'] = 'normal';
+        var layer_PercentofPeople100BelowFederalPovertyLinepercentile_9 = new L.geoJson(json_PercentofPeople100BelowFederalPovertyLinepercentile_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PercentofPeople100BelowFederalPovertyLinepercentile_9',
+            layerName: 'layer_PercentofPeople100BelowFederalPovertyLinepercentile_9',
+            pane: 'pane_PercentofPeople100BelowFederalPovertyLinepercentile_9',
+            onEachFeature: pop_PercentofPeople100BelowFederalPovertyLinepercentile_9,
+            style: style_PercentofPeople100BelowFederalPovertyLinepercentile_9_0,
+        });
+        bounds_group.addLayer(layer_PercentofPeople100BelowFederalPovertyLinepercentile_9);
+        function pop_EnergyBurdenpercentile_10(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Energy burden (percentile)</th>\
+                        <td class="visible-with-data" id="EBF_PFS">' + (feature.properties['EBF_PFS'] !== null ? autolinker.link(String(feature.properties['EBF_PFS']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_EnergyBurdenpercentile_10_0(feature) {
+            if (feature.properties['EBF_PFS'] >= 0.750000 && feature.properties['EBF_PFS'] <= 0.900000 ) {
+                return {
+                pane: 'pane_EnergyBurdenpercentile_10',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,225,255,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['EBF_PFS'] >= 0.900000 && feature.properties['EBF_PFS'] <= 0.990000 ) {
+                return {
+                pane: 'pane_EnergyBurdenpercentile_10',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(244,19,255,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_EnergyBurdenpercentile_10');
+        map.getPane('pane_EnergyBurdenpercentile_10').style.zIndex = 410;
+        map.getPane('pane_EnergyBurdenpercentile_10').style['mix-blend-mode'] = 'normal';
+        var layer_EnergyBurdenpercentile_10 = new L.geoJson(json_EnergyBurdenpercentile_10, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_EnergyBurdenpercentile_10',
+            layerName: 'layer_EnergyBurdenpercentile_10',
+            pane: 'pane_EnergyBurdenpercentile_10',
+            onEachFeature: pop_EnergyBurdenpercentile_10,
+            style: style_EnergyBurdenpercentile_10_0,
+        });
+        bounds_group.addLayer(layer_EnergyBurdenpercentile_10);
+        function pop_ExpectedPopulationLossRatepercentile_11(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Expected population loss rate (Natural Hazards Risk Index) (percentile)</th>\
+                        <td class="visible-with-data" id="EPLR_PFS">' + (feature.properties['EPLR_PFS'] !== null ? autolinker.link(String(feature.properties['EPLR_PFS']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_ExpectedPopulationLossRatepercentile_11_0(feature) {
+            if (feature.properties['EPLR_PFS'] >= 0.750000 && feature.properties['EPLR_PFS'] <= 0.900000 ) {
+                return {
+                pane: 'pane_ExpectedPopulationLossRatepercentile_11',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,140,255,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['EPLR_PFS'] >= 0.900000 && feature.properties['EPLR_PFS'] <= 0.990000 ) {
+                return {
+                pane: 'pane_ExpectedPopulationLossRatepercentile_11',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(174,0,255,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_ExpectedPopulationLossRatepercentile_11');
+        map.getPane('pane_ExpectedPopulationLossRatepercentile_11').style.zIndex = 411;
+        map.getPane('pane_ExpectedPopulationLossRatepercentile_11').style['mix-blend-mode'] = 'normal';
+        var layer_ExpectedPopulationLossRatepercentile_11 = new L.geoJson(json_ExpectedPopulationLossRatepercentile_11, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ExpectedPopulationLossRatepercentile_11',
+            layerName: 'layer_ExpectedPopulationLossRatepercentile_11',
+            pane: 'pane_ExpectedPopulationLossRatepercentile_11',
+            onEachFeature: pop_ExpectedPopulationLossRatepercentile_11,
+            style: style_ExpectedPopulationLossRatepercentile_11_0,
+        });
+        bounds_group.addLayer(layer_ExpectedPopulationLossRatepercentile_11);
+        function pop_DOTTravelBarrierScorepercentile_12(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">DOT Travel Barriers Score (percentile)</th>\
+                        <td class="visible-with-data" id="TD_PFS">' + (feature.properties['TD_PFS'] !== null ? autolinker.link(String(feature.properties['TD_PFS']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_DOTTravelBarrierScorepercentile_12_0(feature) {
+            if (feature.properties['TD_PFS'] >= 0.750000 && feature.properties['TD_PFS'] <= 0.900000 ) {
+                return {
+                pane: 'pane_DOTTravelBarrierScorepercentile_12',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(208,209,230,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['TD_PFS'] >= 0.900000 && feature.properties['TD_PFS'] <= 0.980000 ) {
+                return {
+                pane: 'pane_DOTTravelBarrierScorepercentile_12',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(84,39,143,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_DOTTravelBarrierScorepercentile_12');
+        map.getPane('pane_DOTTravelBarrierScorepercentile_12').style.zIndex = 412;
+        map.getPane('pane_DOTTravelBarrierScorepercentile_12').style['mix-blend-mode'] = 'normal';
+        var layer_DOTTravelBarrierScorepercentile_12 = new L.geoJson(json_DOTTravelBarrierScorepercentile_12, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_DOTTravelBarrierScorepercentile_12',
+            layerName: 'layer_DOTTravelBarrierScorepercentile_12',
+            pane: 'pane_DOTTravelBarrierScorepercentile_12',
+            onEachFeature: pop_DOTTravelBarrierScorepercentile_12,
+            style: style_DOTTravelBarrierScorepercentile_12_0,
+        });
+        bounds_group.addLayer(layer_DOTTravelBarrierScorepercentile_12);
+        function pop_LowLifeExpectancypercentile_13(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Low life expectancy (percentile)</th>\
+                        <td class="visible-with-data" id="LLEF_PFS">' + (feature.properties['LLEF_PFS'] !== null ? autolinker.link(String(feature.properties['LLEF_PFS']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_LowLifeExpectancypercentile_13_0(feature) {
+            if (feature.properties['LLEF_PFS'] >= 0.750000 && feature.properties['LLEF_PFS'] <= 0.900000 ) {
+                return {
+                pane: 'pane_LowLifeExpectancypercentile_13',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,203,235,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['LLEF_PFS'] >= 0.900000 && feature.properties['LLEF_PFS'] <= 0.990000 ) {
+                return {
+                pane: 'pane_LowLifeExpectancypercentile_13',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,28,119,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_LowLifeExpectancypercentile_13');
+        map.getPane('pane_LowLifeExpectancypercentile_13').style.zIndex = 413;
+        map.getPane('pane_LowLifeExpectancypercentile_13').style['mix-blend-mode'] = 'normal';
+        var layer_LowLifeExpectancypercentile_13 = new L.geoJson(json_LowLifeExpectancypercentile_13, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_LowLifeExpectancypercentile_13',
+            layerName: 'layer_LowLifeExpectancypercentile_13',
+            pane: 'pane_LowLifeExpectancypercentile_13',
+            onEachFeature: pop_LowLifeExpectancypercentile_13,
+            style: style_LowLifeExpectancypercentile_13_0,
+        });
+        bounds_group.addLayer(layer_LowLifeExpectancypercentile_13);
+        function pop_DiagnosedDiabetespercentile_14(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Diagnosed Diabetes Among Adults 18+  (percentile)</th>\
+                        <td class="visible-with-data" id="DF_PFS">' + (feature.properties['DF_PFS'] !== null ? autolinker.link(String(feature.properties['DF_PFS']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_DiagnosedDiabetespercentile_14_0(feature) {
+            if (feature.properties['DF_PFS'] >= 0.750000 && feature.properties['DF_PFS'] <= 0.900000 ) {
+                return {
+                pane: 'pane_DiagnosedDiabetespercentile_14',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,187,161,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['DF_PFS'] >= 0.900000 && feature.properties['DF_PFS'] <= 0.990000 ) {
+                return {
+                pane: 'pane_DiagnosedDiabetespercentile_14',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(165,15,21,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_DiagnosedDiabetespercentile_14');
+        map.getPane('pane_DiagnosedDiabetespercentile_14').style.zIndex = 414;
+        map.getPane('pane_DiagnosedDiabetespercentile_14').style['mix-blend-mode'] = 'normal';
+        var layer_DiagnosedDiabetespercentile_14 = new L.geoJson(json_DiagnosedDiabetespercentile_14, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_DiagnosedDiabetespercentile_14',
+            layerName: 'layer_DiagnosedDiabetespercentile_14',
+            pane: 'pane_DiagnosedDiabetespercentile_14',
+            onEachFeature: pop_DiagnosedDiabetespercentile_14,
+            style: style_DiagnosedDiabetespercentile_14_0,
+        });
+        bounds_group.addLayer(layer_DiagnosedDiabetespercentile_14);
+        function pop_CurrentAsthmaAmongAdultspercentile_15(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Current asthma among adults aged greater than or equal to 18 years (percentile)</th>\
+                        <td class="visible-with-data" id="AF_PFS">' + (feature.properties['AF_PFS'] !== null ? autolinker.link(String(feature.properties['AF_PFS']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_CurrentAsthmaAmongAdultspercentile_15_0(feature) {
+            if (feature.properties['AF_PFS'] >= 0.750000 && feature.properties['AF_PFS'] <= 0.900000 ) {
+                return {
+                pane: 'pane_CurrentAsthmaAmongAdultspercentile_15',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,247,188,0.8)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['AF_PFS'] >= 0.900000 && feature.properties['AF_PFS'] <= 0.990000 ) {
+                return {
+                pane: 'pane_CurrentAsthmaAmongAdultspercentile_15',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(204,127,2,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_CurrentAsthmaAmongAdultspercentile_15');
+        map.getPane('pane_CurrentAsthmaAmongAdultspercentile_15').style.zIndex = 415;
+        map.getPane('pane_CurrentAsthmaAmongAdultspercentile_15').style['mix-blend-mode'] = 'normal';
+        var layer_CurrentAsthmaAmongAdultspercentile_15 = new L.geoJson(json_CurrentAsthmaAmongAdultspercentile_15, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CurrentAsthmaAmongAdultspercentile_15',
+            layerName: 'layer_CurrentAsthmaAmongAdultspercentile_15',
+            pane: 'pane_CurrentAsthmaAmongAdultspercentile_15',
+            onEachFeature: pop_CurrentAsthmaAmongAdultspercentile_15,
+            style: style_CurrentAsthmaAmongAdultspercentile_15_0,
+        });
+        bounds_group.addLayer(layer_CurrentAsthmaAmongAdultspercentile_15);
+        function pop_CoronaryHeartDiseasepercentile_16(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Coronary heart disease among adults aged greater than or equal to 18 years (percentile)</th>\
+                        <td class="visible-with-data" id="HDF_PFS">' + (feature.properties['HDF_PFS'] !== null ? autolinker.link(String(feature.properties['HDF_PFS']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_CoronaryHeartDiseasepercentile_16_0(feature) {
+            if (feature.properties['HDF_PFS'] >= 0.750000 && feature.properties['HDF_PFS'] <= 0.900000 ) {
+                return {
+                pane: 'pane_CoronaryHeartDiseasepercentile_16',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,232,200,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['HDF_PFS'] >= 0.900000 && feature.properties['HDF_PFS'] <= 0.990000 ) {
+                return {
+                pane: 'pane_CoronaryHeartDiseasepercentile_16',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(217,95,14,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_CoronaryHeartDiseasepercentile_16');
+        map.getPane('pane_CoronaryHeartDiseasepercentile_16').style.zIndex = 416;
+        map.getPane('pane_CoronaryHeartDiseasepercentile_16').style['mix-blend-mode'] = 'normal';
+        var layer_CoronaryHeartDiseasepercentile_16 = new L.geoJson(json_CoronaryHeartDiseasepercentile_16, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CoronaryHeartDiseasepercentile_16',
+            layerName: 'layer_CoronaryHeartDiseasepercentile_16',
+            pane: 'pane_CoronaryHeartDiseasepercentile_16',
+            onEachFeature: pop_CoronaryHeartDiseasepercentile_16,
+            style: style_CoronaryHeartDiseasepercentile_16_0,
+        });
+        bounds_group.addLayer(layer_CoronaryHeartDiseasepercentile_16);
+        function pop_ProposedMSXpipelineroute_17(feature, layer) {
+            var popupContent = '<table>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_ProposedMSXpipelineroute_17_0() {
+            return {
+                pane: 'pane_ProposedMSXpipelineroute_17',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_ProposedMSXpipelineroute_17');
+        map.getPane('pane_ProposedMSXpipelineroute_17').style.zIndex = 417;
+        map.getPane('pane_ProposedMSXpipelineroute_17').style['mix-blend-mode'] = 'normal';
+        var layer_ProposedMSXpipelineroute_17 = new L.geoJson(json_ProposedMSXpipelineroute_17, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_ProposedMSXpipelineroute_17',
+            layerName: 'layer_ProposedMSXpipelineroute_17',
+            pane: 'pane_ProposedMSXpipelineroute_17',
+            onEachFeature: pop_ProposedMSXpipelineroute_17,
+            style: style_ProposedMSXpipelineroute_17_0,
+        });
+        bounds_group.addLayer(layer_ProposedMSXpipelineroute_17);
+        map.addLayer(layer_ProposedMSXpipelineroute_17);
+        function pop_ProposedMSXCompressorStations_18(feature, layer) {
+            var popupContent = '<table>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_ProposedMSXCompressorStations_18_0() {
+            return {
+                pane: 'pane_ProposedMSXCompressorStations_18',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,0,40,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_ProposedMSXCompressorStations_18');
+        map.getPane('pane_ProposedMSXCompressorStations_18').style.zIndex = 418;
+        map.getPane('pane_ProposedMSXCompressorStations_18').style['mix-blend-mode'] = 'normal';
+        var layer_ProposedMSXCompressorStations_18 = new L.geoJson(json_ProposedMSXCompressorStations_18, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_ProposedMSXCompressorStations_18',
+            layerName: 'layer_ProposedMSXCompressorStations_18',
+            pane: 'pane_ProposedMSXCompressorStations_18',
+            onEachFeature: pop_ProposedMSXCompressorStations_18,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_ProposedMSXCompressorStations_18_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_ProposedMSXCompressorStations_18);
+        map.addLayer(layer_ProposedMSXCompressorStations_18);
+        const url = {"Nominatim OSM": "https://nominatim.openstreetmap.org/search?format=geojson&addressdetails=1&",
+        "France BAN": "https://api-adresse.data.gouv.fr/search/?"}
+        var photonControl = L.control.photon({
+            url: url["Nominatim OSM"],
+            feedbackLabel: '',
+            position: 'topleft',
+            includePosition: true,
+            initial: true,
+            // resultsHandler: myHandler,
+        }).addTo(map);
+        photonControl._container.childNodes[0].style.borderRadius="10px"
+        // Create a variable to store the geoJSON data
+        var x = null;
+        // Create a variable to store the marker
+        var marker = null;
+        // Add an event listener to the Photon control to create a marker from the returned geoJSON data
+        var z = null;
+        photonControl.on('selected', function(e) {
+            console.log(photonControl.search.resultsContainer);
+            if (x != null) {
+                map.removeLayer(obj3.marker);
+                map.removeLayer(x);
+            }
+            obj2.gcd = e.choice;
+            x = L.geoJSON(obj2.gcd).addTo(map);
+            var label = typeof obj2.gcd.properties.label === 'undefined' ? obj2.gcd.properties.display_name : obj2.gcd.properties.label;
+            obj3.marker = L.marker(x.getLayers()[0].getLatLng()).bindPopup(label).addTo(map);
+            map.setView(x.getLayers()[0].getLatLng(), 17);
+            z = typeof e.choice.properties.label === 'undefined'? e.choice.properties.display_name : e.choice.properties.label;
+            console.log(e);
+            e.target.input.value = z;
+        });
+        var search = document.getElementsByClassName("leaflet-photon leaflet-control")[0];
+        search.classList.add("leaflet-control-search")
+        search.style.display = "flex";
+        search.style.backgroundColor="rgba(255,255,255,0.5)" 
+
+        // Create the new button element
+        var button = document.createElement("div");
+        button.id = "gcd-button-control";
+        button.className = "gcd-gl-btn fa fa-search search-button";
+
+        // Insert the button at the beginning of the search control
+        search.insertBefore(button, search.firstChild);
+        last = search.lastChild;
+        last.style.display = "none";
+        button.addEventListener("click", function (e) {
+            if (last.style.display === "none") {
+                last.style.display = "block";
+            } else {
+                last.style.display = "none";
+            }
+        });
+        var overlaysTree = [
+            {label: '<img src="legend/ProposedMSXCompressorStations_18.png" /> Proposed MSX Compressor Stations', layer: layer_ProposedMSXCompressorStations_18},
+            {label: '<img src="legend/ProposedMSXpipelineroute_17.png" /> Proposed MSX pipeline route', layer: layer_ProposedMSXpipelineroute_17},
+        {label: '<b>Health Variables</b>',  selectAllCheckbox: true, children: [
+            {label: 'Coronary Heart Disease (percentile)<br /><table><tr><td style="text-align: center;"><img src="legend/CoronaryHeartDiseasepercentile_16_075090.png" /></td><td>0.75 - 0.9 </td></tr><tr><td style="text-align: center;"><img src="legend/CoronaryHeartDiseasepercentile_16_090991.png" /></td><td>0.9 - 0.99 </td></tr></table>', layer: layer_CoronaryHeartDiseasepercentile_16},
+            {label: 'Current Asthma Among Adults (percentile)<br /><table><tr><td style="text-align: center;"><img src="legend/CurrentAsthmaAmongAdultspercentile_15_075090.png" /></td><td>0.75 - 0.9 </td></tr><tr><td style="text-align: center;"><img src="legend/CurrentAsthmaAmongAdultspercentile_15_090991.png" /></td><td>0.9 - 0.99 </td></tr></table>', layer: layer_CurrentAsthmaAmongAdultspercentile_15},
+            {label: 'Diagnosed Diabetes (percentile)<br /><table><tr><td style="text-align: center;"><img src="legend/DiagnosedDiabetespercentile_14_075090.png" /></td><td>0.75 - 0.9 </td></tr><tr><td style="text-align: center;"><img src="legend/DiagnosedDiabetespercentile_14_090991.png" /></td><td>0.9 - 0.99 </td></tr></table>', layer: layer_DiagnosedDiabetespercentile_14},
+            {label: 'Low Life Expectancy (percentile)<br /><table><tr><td style="text-align: center;"><img src="legend/LowLifeExpectancypercentile_13_075090.png" /></td><td>0.75 - 0.9 </td></tr><tr><td style="text-align: center;"><img src="legend/LowLifeExpectancypercentile_13_090991.png" /></td><td>0.9 - 0.99 </td></tr></table>', layer: layer_LowLifeExpectancypercentile_13},]},
+        {label: '<b>Economic Variables</b>',  selectAllCheckbox: true, children: [
+            {label: 'DOT Travel Barrier Score (percentile)<br /><table><tr><td style="text-align: center;"><img src="legend/DOTTravelBarrierScorepercentile_12_075090.png" /></td><td>0.75 - 0.9 </td></tr><tr><td style="text-align: center;"><img src="legend/DOTTravelBarrierScorepercentile_12_090981.png" /></td><td>0.9 - 0.98 </td></tr></table>', layer: layer_DOTTravelBarrierScorepercentile_12},
+            {label: 'Expected Population Loss Rate (percentile)<br /><table><tr><td style="text-align: center;"><img src="legend/ExpectedPopulationLossRatepercentile_11_075090.png" /></td><td>0.75 - 0.9 </td></tr><tr><td style="text-align: center;"><img src="legend/ExpectedPopulationLossRatepercentile_11_090991.png" /></td><td>0.9 - 0.99 </td></tr></table>', layer: layer_ExpectedPopulationLossRatepercentile_11},
+            {label: 'Energy Burden (percentile)<br /><table><tr><td style="text-align: center;"><img src="legend/EnergyBurdenpercentile_10_075090.png" /></td><td>0.75 - 0.9 </td></tr><tr><td style="text-align: center;"><img src="legend/EnergyBurdenpercentile_10_090991.png" /></td><td>0.9 - 0.99 </td></tr></table>', layer: layer_EnergyBurdenpercentile_10},
+            {label: 'Percent of People <100% Below Federal Poverty Line (percentile)<br /><table><tr><td style="text-align: center;"><img src="legend/PercentofPeople100BelowFederalPovertyLinepercentile_9_075090.png" /></td><td>0.75 - 0.9 </td></tr><tr><td style="text-align: center;"><img src="legend/PercentofPeople100BelowFederalPovertyLinepercentile_9_090991.png" /></td><td>0.9 - 0.99 </td></tr></table>', layer: layer_PercentofPeople100BelowFederalPovertyLinepercentile_9},
+            {label: 'Percent of People <200% Below Federal Poverty Line<br /><table><tr><td style="text-align: center;"><img src="legend/PercentofPeople200BelowFederalPovertyLine_8_075090.png" /></td><td>0.75 - 0.9 </td></tr><tr><td style="text-align: center;"><img src="legend/PercentofPeople200BelowFederalPovertyLine_8_090991.png" /></td><td>0.9 - 0.99 </td></tr></table>', layer: layer_PercentofPeople200BelowFederalPovertyLine_8},
+            {label: 'Percent Unemployment<br /><table><tr><td style="text-align: center;"><img src="legend/PercentUnemployment_7_075090.png" /></td><td>0.75 - 0.9 </td></tr><tr><td style="text-align: center;"><img src="legend/PercentUnemployment_7_090991.png" /></td><td>0.9 - 0.99 </td></tr></table>', layer: layer_PercentUnemployment_7},]},
+        {label: '<b>Environmental Variables</b>',  selectAllCheckbox: true, children: [
+            {label: 'Agricultural Loss Rate (percentile)<br /><table><tr><td style="text-align: center;"><img src="legend/AgriculturalLossRatepercentile_6_075090.png" /></td><td>0.75 - 0.9 </td></tr><tr><td style="text-align: center;"><img src="legend/AgriculturalLossRatepercentile_6_090991.png" /></td><td>0.9 - 0.99 </td></tr></table>', layer: layer_AgriculturalLossRatepercentile_6},
+            {label: 'Expected Building Loss Rate (percentile)<br /><table><tr><td style="text-align: center;"><img src="legend/ExpectedBuildingLossRatepercentile_5_075090.png" /></td><td>0.75 - 0.9 </td></tr><tr><td style="text-align: center;"><img src="legend/ExpectedBuildingLossRatepercentile_5_090991.png" /></td><td>0.9 - 0.99 </td></tr></table>', layer: layer_ExpectedBuildingLossRatepercentile_5},
+            {label: 'Properties at Risk of Flood Risk 30 years (percentile)<br /><table><tr><td style="text-align: center;"><img src="legend/PropertiesatRiskofFloodRisk30yearspercentile_4_075090.png" /></td><td>0.75 - 0.9 </td></tr><tr><td style="text-align: center;"><img src="legend/PropertiesatRiskofFloodRisk30yearspercentile_4_090981.png" /></td><td>0.9 - 0.98 </td></tr></table>', layer: layer_PropertiesatRiskofFloodRisk30yearspercentile_4},]},
+            {label: '<img src="legend/PopulationDemographics_3.png" /> Population Demographics', layer: layer_PopulationDemographics_3},
+            {label: '<img src="legend/Censustracts_2.png" /> Census tracts', layer: layer_Censustracts_2},
+            {label: '<img src="legend/Counties_1.png" /> Counties', layer: layer_Counties_1},
+            {label: "Carto positron", layer: layer_Cartopositron_0, radioGroup: 'bm' },]
+        var lay = L.control.layers.tree(null, overlaysTree,{
+            //namedToggle: true,
+            //selectorBack: false,
+            //closedSymbol: '&#8862; &#x1f5c0;',
+            //openedSymbol: '&#8863; &#x1f5c1;',
+            //collapseAll: 'Collapse all',
+            //expandAll: 'Expand all',
+            collapsed: true,
+        });
+        lay.addTo(map);
+        setBounds();
+        </script>        
+		<script>
+    // --- THE "TOGGLE CLUB" SCRIPT (WITH TIMING FIX) ---
+    
+    // 1. DEFINE THE CLUB MEMBERS
+    var toggleableLayers = [
+layer_PopulationDemographics_3,
+layer_PropertiesatRiskofFloodRisk30yearspercentile_4,
+layer_ExpectedBuildingLossRatepercentile_5,
+layer_AgriculturalLossRatepercentile_6,
+layer_PercentUnemployment_7,
+layer_PercentofPeople200BelowFederalPovertyLine_8,
+layer_PercentofPeople100BelowFederalPovertyLinepercentile_9,
+layer_EnergyBurdenpercentile_10,
+layer_ExpectedPopulationLossRatepercentile_11,
+layer_DOTTravelBarrierScorepercentile_12,
+layer_LowLifeExpectancypercentile_13,
+layer_DiagnosedDiabetespercentile_14,
+layer_CurrentAsthmaAmongAdultspercentile_15,
+layer_CoronaryHeartDiseasepercentile_16,
+    ];
+
+    // 2. THE LOGIC
+    map.on('overlayadd', function(e) {
+        var clickedLayer = e.layer;
+
+        // CHECK: Is the layer we just turned on part of the "Toggle Club"?
+        if (toggleableLayers.includes(clickedLayer)) {
+            
+            // TIMING FIX: Wait 10ms to let the checkbox finish "checking" itself
+            setTimeout(function() {
+                
+                // Now loop through the club and remove the others
+                toggleableLayers.forEach(function(memberLayer) {
+                    
+                    // If this member is currently visible...
+                    // AND it is not the one we just clicked...
+                    if (map.hasLayer(memberLayer) && memberLayer !== clickedLayer) {
+                        
+                        // Remove it from the map! 
+                        // (This triggers the menu to uncheck the box)
+                        map.removeLayer(memberLayer);
+                    }
+                });
+                
+            }, 10); // 10 milliseconds delay
+        }
+    });
+</script>
+		
+    </body>
+</html>

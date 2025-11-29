@@ -42,7 +42,7 @@
 .hero-body .title {
     font-family: 'Georgia', serif; 
     font-weight: 700; 
-    font-size: 3.5rem !important; 
+    font-size: 3rem !important; 
     line-height: 1.1; 
     color: #1D5B58 !important; 
     margin-bottom: 0.5rem; 
@@ -405,5 +405,43 @@ text-align: left; /* if you want left-aligned text */
         padding-right: 1.5rem !important; 
     }
 }
+...
+/* Fix for Extreme... */
+/* End of your existing CSS styles */
+
+</style>
+
+<script>
+    /*
+    * Auto-Close Layer Control Menu on Mobile
+    * Hides the map menu after a variable is selected, giving the map full screen.
+    */
+    function setupAutoClose() {
+        // 1. Identify the Leaflet Layer Control element (the menu)
+        var layerControl = document.querySelector('.leaflet-control-layers-list');
+
+        if (layerControl) {
+            // 2. Add an event listener for any click inside the control list
+            layerControl.addEventListener('click', function(e) {
+                // Wait a moment to allow Leaflet to process the layer selection first
+                setTimeout(function() {
+                    // 3. Find the main Leaflet Control Container
+                    var container = document.querySelector('.leaflet-control-layers-expanded');
+
+                    // 4. If the control is currently expanded (open), click the close button
+                    if (container) {
+                        var toggleButton = document.querySelector('.leaflet-control-layers-toggle');
+                        if (toggleButton) {
+                            toggleButton.click();
+                        }
+                    }
+                }, 100); // 100ms delay to ensure the layer changes first
+            });
+        }
+    }
+
+    // Run the function once the entire page is loaded
+    window.onload = setupAutoClose;
+</script>
 
 </style>

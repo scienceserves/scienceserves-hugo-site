@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     
 
 <meta name="description" content="Hardcoded description; the author should update :)" />
@@ -12,7 +12,7 @@
   
 <link rel="icon" type="image/png" href="/images/favicon.png" />
 <link href="https://fonts.googleapis.com/css?family=Open&#43;Sans:400,600" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="/css/style.min.7fc191db3122a1a4051cd0786268429ca54600e52cc104ea61972f854885d966.css" integrity="sha256-f8GR2zEioaQFHNB4YmhCnKVGAOUswQTqYZcvhUiF2WY=">
 <link rel="stylesheet" type="text/css" href="/css/icons.css">
 
 	<style>
@@ -40,10 +40,11 @@
   content: "CS³";
   font-size: 32px;
   font-weight: 700;
-  background: linear-gradient(135deg, #2E7D32 0%, #1976D2 50%, #00897B 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+ 
+  color: #1D5B58;  
+   
+  -webkit-text-fill-color: #1D5B58; 
+  
   letter-spacing: 2px;
   font-family: 'Open Sans', sans-serif;
 }
@@ -58,7 +59,7 @@
 .hero-body .title {
     font-family: 'Georgia', serif; 
     font-weight: 700; 
-    font-size: 3.5rem !important; 
+    font-size: 3rem !important; 
     line-height: 1.1; 
     color: #1D5B58 !important; 
     margin-bottom: 0.5rem; 
@@ -421,6 +422,42 @@ text-align: left;
         padding-right: 1.5rem !important; 
     }
 }
+...
+ 
+ 
+
+</style>
+
+<script>
+    
+
+    function setupAutoClose() {
+        
+        var layerControl = document.querySelector('.leaflet-control-layers-list');
+
+        if (layerControl) {
+            
+            layerControl.addEventListener('click', function(e) {
+                
+                setTimeout(function() {
+                    
+                    var container = document.querySelector('.leaflet-control-layers-expanded');
+
+                    
+                    if (container) {
+                        var toggleButton = document.querySelector('.leaflet-control-layers-toggle');
+                        if (toggleButton) {
+                            toggleButton.click();
+                        }
+                    }
+                }, 100); 
+            });
+        }
+    }
+
+    
+    window.onload = setupAutoClose;
+</script>
 
 </style>
   </head>
