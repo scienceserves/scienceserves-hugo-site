@@ -1,0 +1,21 @@
+{{ define "main" }}
+
+  {{ partial "single/single.html" . }}
+
+  <section class="section">
+    <div class="container">
+      <div class="content">
+        {{ .Content }} 
+      </div>
+    </div>
+  </section>
+
+  {{ if .Params.include_footer }}
+    {{ partial "footer.html" . }}
+  {{ end }}
+
+  {{ if .Params.sidebar }}
+    {{ partial "single/sidebar.html" . }}
+  {{ end }}
+
+{{ end }}

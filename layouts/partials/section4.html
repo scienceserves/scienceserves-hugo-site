@@ -1,0 +1,50 @@
+{{- $section4 := .Site.Params.section4 }}
+{{- $title    := index $section4 "title" }}
+{{- $subtitle := index $section4 "subtitle" }}
+{{- $clients  := index $section4 "clients" }}
+
+<section class="section is-small" id="section4">
+  <div class="container">
+
+    <div class="title-wrapper has-text-centered">
+      <h2 class="title is-2 light-text is-spaced">{{ $title }}</h2>
+      {{- with $subtitle }}
+      <h3 class="subtitle is-5 light-text">{{ . }}</h3>
+      {{- end }}
+    </div>
+
+
+<div class="contact-wrapper has-text-centered" style="max-width: 600px; margin: 3rem auto 0 auto;">
+        <form method="POST" data-netlify="true" class="form-wrapper">
+            
+            <div class="field">
+                <div class="control">
+                    <input class="input is-medium is-rounded" type="text" name="name" placeholder="Your Name" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-medium is-rounded" type="email" name="email" placeholder="Your Email Address" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <textarea class="textarea is-medium is-rounded" name="inquiry" placeholder="Brief Inquiry (e.g., 'Partnership idea', 'Request for data')" rows="3" required></textarea>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button type="submit" class="button is-large cta-button" style="background-color: #FF6B35; color: white;">
+                        <span>Send Inquiry &rarr;</span>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+  </div>
+</section>

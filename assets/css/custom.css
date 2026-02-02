@@ -1,0 +1,6 @@
+.hero-body img {
+  max-width: 600px; /* or whatever size you want */
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
