@@ -22,11 +22,25 @@
       <description>&lt;h1 id=&#34;our-interactive-map&#34;&gt;Our Interactive Map&lt;/h1&gt;&#xA;&lt;!-- raw HTML omitted --&gt;</description>
     </item>
     <item>
+      <title>Metro City Department of Public Health</title>
+      <link>http://localhost:1313/metro-city-department-of-public-health/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/metro-city-department-of-public-health/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/mcdph.png&#34; alt=&#34;Metro City DPH&#34;&gt;&lt;/p&gt;&#xA;&lt;h1 id=&#34;excellent-work-recruit&#34;&gt;Excellent work, recruit!&lt;/h1&gt;&#xA;&lt;p&gt;You’ve successfully identified the source of the contamination and helped us resolve this critical issue in Metro City. Your sharp mind, excellent problem solving skills, and dedication have made a real difference.&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&amp;ldquo;This is just the beginning. You’ve demonstrated a remarkable aptitude for environmental health work, and I believe you all have bright futures ahead of you in this vital field.&amp;rdquo;&lt;/p&gt;&#xA;&lt;p&gt;— &lt;strong&gt;Dr. Loretta Vance&lt;/strong&gt;, Environmental Health Investigations Team Manager&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>SSE4 Pipeline Analysis</title>
       <link>http://localhost:1313/maps/sse4/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/maps/sse4/</guid>
       <description></description>
+    </item>
+    <item>
+      <title>Student Resources</title>
+      <link>http://localhost:1313/student-resources/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/student-resources/</guid>
+      <description>&lt;h3 id=&#34;game-information&#34;&gt;Game Information&lt;/h3&gt;&#xA;&lt;p&gt;Step into the shoes of an environmental health investigator in &amp;lsquo;Metro City&amp;rsquo;! This engaging escape room activity challenges you to solve a critical case, using logic and problem-solving skills to protect the community. Inspired by real-world environmental challenges, this activity gives you a taste of what it’s like to be an environmental scientist – using science and critical thinking to solve problems and make a positive impact.&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;http://localhost:1313/protected/metrocityscientist.pdf&#34;&gt;Download the Game&lt;/a&gt;&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

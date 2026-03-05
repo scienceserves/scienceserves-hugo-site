@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Metro City Department of Public Health</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+ 
+.hero-body .column.is-7 figure.image {
+  padding-top: 0 !important;
+  height: auto !important;
+  max-width: none !important;
+}
+
+.hero-body .column.is-7 figure.image img {
+  position: static !important;
+  max-width: 120% !important;
+  width: 120% !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+ 
+.navbar-brand .navbar-item img {
+  display: none;  
+}
+
+.navbar-brand .navbar-item::after {
+  content: "CS³";
+  font-size: 32px;
+  font-weight: 700;
+ 
+  color: #1D5B58;  
+   
+  -webkit-text-fill-color: #1D5B58; 
+  
+  letter-spacing: 2px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+ 
+.hero-body .title,
+.hero-body .subtitle {
+  text-align: center;
+}
+
+ 
+.hero-body .title {
+    font-family: 'Georgia', serif; 
+    font-weight: 700; 
+    font-size: 3rem !important; 
+    line-height: 1.1; 
+    color: #1D5B58 !important; 
+    margin-bottom: 0.5rem; 
+}
+
+ 
+.cs3-divider {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin-top: 2rem; 
+    margin-bottom: 2rem; 
+    width: 100%; 
+}
+
+.cs3-divider .divider-line {
+    flex-grow: 1; 
+    height: 2px; 
+    background-color: #FF6B35; 
+    max-width: 100px; 
+    margin: 0 0.75rem; 
+}
+
+.cs3-divider .cs3-text {
+    font-family: 'Open Sans', sans-serif; 
+    font-size: 1.5rem; 
+    font-weight: 700; 
+    color: #1D5B58; 
+    padding: 0 0.5rem; 
+}
+
+
+ 
+
+.feature-card .card-icon img {
+width: 100px !important;  
+height: auto !important;  
+margin-top: 3rem;
+}
+
+.feature-card {
+     
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    min-height: initial; 
+    height: auto;
+    
+     
+    width: 90%; 
+    margin: 0 auto; 
+}
+
+ 
+.feature-card .card-title h4 {
+margin: 0 auto;  
+max-width: 90%;
+font-size: 1.4rem;
+font-weight: 600;
+color: #FF6B35;
+text-align: center;
+}
+
+
+ 
+.feature-card .card-subtitle p {
+margin: .5rem auto;  
+max-width: 90%;
+font-size: 1rem;
+font-weight: bold;
+font-style: italic;
+text-align: center;
+line-height: 1.6;
+}
+
+ 
+.feature-card .card-text p {
+margin: 0.5rem auto;
+max-width: 100%;
+font-size: 1rem;
+line-height: 1.6;
+text-align: left;  
+}
+
+ 
+
+ 
+#section2 .feature-column {
+  display: flex;  
+  padding: 1rem;  
+}
+
+ 
+#section2 .feature-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+  
+   
+  background-color: #fffff;   
+  border: 1px solid #F9C74F;   
+  border-radius: 8px;          
+  padding: 1.5rem;             
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);  
+  
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+ 
+#section2 .feature-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  border-color: #D1D5DA;  
+}
+
+ 
+ 
+#section2 .feature-header {
+  min-height: 5rem;  
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+#section2 .feature-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1D5B58;  
+  line-height: 1.2;
+  margin: 0;
+}
+
+ 
+#section2 .feature-body {
+  flex-grow: 1;
+  font-size: 1.2rem;
+  color: #333333;
+  line-height: 1.6;
+}
+
+ 
+#section2 .feature-body p {
+  margin-bottom: 0;
+}
+
+ 
+
+.about-text {
+   
+  text-align: left;
+  
+   
+  margin-top: 0rem; 
+  
+   
+  font-family: 'Open Sans', sans-serif;  
+  font-size: 1.1rem;       
+  line-height: 1.8;        
+  color: #333333;          
+  font-weight: 400;        
+}
+
+ 
+@media (max-width: 768px) {
+  .about-text {
+    text-align: center;  
+    margin-top: 1rem;
+  }
+}
+
+
+ 
+
+ 
+#section3 {
+    background-color: #F0FAFC !important;  
+    color: #1D5B58;  
+    padding: 4rem 1.5rem;
+}
+
+ 
+#section3 .pushed-image {
+    border-radius: 12px;  
+     
+    box-shadow: 0 15px 35px rgba(29, 91, 88, 0.15); 
+    border: 4px solid #ffffff;  
+    transition: transform 0.3s ease;
+    max-width: 100%;
+    height: auto;
+}
+
+#section3 .pushed-image:hover {
+    transform: translateY(-5px);  
+}
+
+ 
+#section3 .title {
+    color: #1D5B58 !important;  
+    font-weight: 800;
+    margin-top: 2.5rem;  
+}
+
+#section3 .subtitle {
+    color: #5d6d7e !important;  
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+ 
+#section3 .cta {
+    background-color: #FF6B35 !important;  
+    color: #ffffff !important;
+    border: none;
+    font-weight: 700;
+    padding: 1.25rem 3rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);  
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+}
+
+#section3 .cta:hover {
+    background-color: #F9C74F !important;  
+    color: #1D5B58 !important;  
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(249, 199, 79, 0.4);
+}
+
+ 
+
+ 
+#section4 {
+     
+    background-color: #96D9C8 !important; 
+    color: #ffffff;  
+}
+
+ 
+#section4 .title-wrapper .title {
+    color: #1D5B58 !important;
+    font-size: 3.5rem !important;  
+    font-weight: 800;  
+    margin-bottom: 1.5rem;  
+}
+
+#section4 .title-wrapper .subtitle {
+    color: #1D5B58 !important;  
+    font-size: 1.5rem !important;  
+    line-height: 1.6;
+    max-width: 800px;  
+    margin-left: auto;
+    margin-right: auto;
+	margin-bottom: 0rem;
+}
+
+ 
+.contact-wrapper {
+    margin-top: 0rem;  
+}
+
+.cta-button {
+     
+    background-color: #FF6B35 !important;
+    color: #ffffff !important;
+    
+    font-weight: 500;
+    border: none;
+    padding: 1.5rem 2rem;  
+    border-radius: 50px;  
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+ 
+.cta-button:hover {
+     
+    background-color: #F9C74F !important;
+    
+     
+    color: #1D5B58 !important; 
+    
+    transform: translateY(-3px);  
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+}
+
+ 
+ 
+#section4 .testimonial blockquote {
+    color: #F0FAFC !important;  
+    font-style: italic;
+    opacity: 0.9;
+}
+#section4 .testimonial .author h5 {
+    color: #ffffff !important;  
+}
+#section4 .testimonial .author span {
+    color: #F9C74F !important;  
+}
+
+ 
+
+ 
+.footer.footer-dark {
+    background-color: #1d5b58 !important;  
+    color: #ffffff !important;  
+    padding: 3rem 1.5rem;
+}
+
+ 
+.footer-header h3 {
+    color: #ffffff !important;  
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+ 
+.footer .credits-list li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.footer .credits-list a {
+    color: #ffffff !important;  
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.footer .credits-list a:hover {
+    color: #F9C74F !important;  
+    text-decoration: underline;
+}
+
+ 
+.footer .level-item .icon {
+    color: #FF6B35 !important;  
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+.footer .level-item:hover .icon {
+    color: #F9C74F !important;  
+    transform: translateY(-3px);
+}
+
+ 
+@media screen and (max-width: 1400px) {
+     
+    .responsive-fix-columns > .column {
+         
+        width: 100% !important; 
+         
+        padding-left: 1.5rem !important; 
+        padding-right: 1.5rem !important; 
+    }
+}
+...
+ 
+ 
+
+</style>
+
+<script>
+    
+
+    function setupAutoClose() {
+        
+        var layerControl = document.querySelector('.leaflet-control-layers-list');
+
+        if (layerControl) {
+            
+            layerControl.addEventListener('click', function(e) {
+                
+                setTimeout(function() {
+                    
+                    var container = document.querySelector('.leaflet-control-layers-expanded');
+
+                    
+                    if (container) {
+                        var toggleButton = document.querySelector('.leaflet-control-layers-toggle');
+                        if (toggleButton) {
+                            toggleButton.click();
+                        }
+                    }
+                }, 100); 
+            });
+        }
+    }
+
+    
+    window.onload = setupAutoClose;
+</script>
+
+</style> 
+    
+    <style>
+        .password-page-wrapper { background: #f5f5f5; min-height: 100vh; padding: 3rem 0; }
+        .login-card { border-radius: 8px; border-top: 5px solid #00d1b2; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .full-width-box { width: 100% !important; max-width: none !important; }
+        .content.is-large { font-size: 1.25rem; line-height: 1.7; color: #333; }
+        .content img { display: block; margin: 2rem auto; border-radius: 10px; max-width: 100%; height: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    </style>
+</head>
+
+<body>
+    
+<nav class="navbar is-fresh is-transparent no-shadow" role="navigation" aria-label="main navigation">
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <img src="/images/images/logo.png" alt="" width="112" height="28">
+      </a>
+
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+      <div id="navbar-menu" class="navbar-menu is-static">
+
+        <div class="navbar-end">
+          <a href="/#section1" class="navbar-item is-secondary">
+            Mission
+          </a>
+          <a href="/#section2" class="navbar-item is-secondary">
+            About
+          </a>
+          <a href="/maps" class="navbar-item is-secondary">
+            Maps
+          </a>
+          <a href="/student-resources/" class="navbar-item is-secondary">
+            Students
+          </a>
+          <a href="/#section4" class="navbar-item is-secondary">
+            Contact
+          </a>
+        </div>
+      </div>
+  </div>
+</nav>
+
+
+    <div class="password-page-wrapper">
+        
+        <div id="loginLayout" class="container">
+            <div class="columns is-centered">
+                <div class="column is-5-tablet is-4-desktop">
+                    
+                    <div id="passwordFormContainer" class="box login-card p-6">
+                        
+                        
+                        <div class="has-text-centered mb-5">
+                            <img src="/images/mcdph.png" alt="Metro City Health Dept" style="max-width: 160px; height: auto;">
+                        </div>
+                        
+
+                        <h1 class="title is-4 has-text-centered">Metro City Department of Public Health</h1>
+                        <p class="subtitle is-6 has-text-centered">Enter the password to access secure files.</p>
+                        <hr>
+                        
+                        <form id="passwordForm" onsubmit="return checkPassword()">
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-medium" type="password" id="passcode" placeholder="Password" required>
+                                </div>
+                                <p id="error" class="help is-danger"></p>
+                            </div>
+                            <button type="submit" class="button is-primary is-fullwidth is-medium">Unlock Resources</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contentArea" style="display: none;">
+            <div class="container is-fluid px-5">
+                <div class="box p-6 full-width-box">
+                    <div class="content is-large">
+                        <p><img src="/images/mcdph.png" alt="Metro City DPH"></p>
+<h1 id="excellent-work-recruit">Excellent work, recruit!</h1>
+<p>You’ve successfully identified the source of the contamination and helped us resolve this critical issue in Metro City. Your sharp mind, excellent problem solving skills, and dedication have made a real difference.</p>
+<blockquote>
+<p>&ldquo;This is just the beginning. You’ve demonstrated a remarkable aptitude for environmental health work, and I believe you all have bright futures ahead of you in this vital field.&rdquo;</p>
+<p>— <strong>Dr. Loretta Vance</strong>, Environmental Health Investigations Team Manager</p>
+</blockquote>
+<hr>
+<h2 id="learning-more">Learning more:</h2>
+<p>What began as a puzzling series of clues has led you to uncover a critical environmental health issue that affects communities across the nation. While Metro City is fictional, the challenges you’ve faced mirror a very real struggle that unfolded in <strong>Newark, New Jersey</strong>. For years, residents of Newark battled aging infrastructure and high lead levels, ultimately demanding action to ensure safe drinking water for all. Your work today underscores the importance of vigilance and advocacy in protecting public health, a lesson learned from the courageous residents of Newark.</p>
+<h2 id="the-story-of-newarks-water-a-victory-for-environmental-justice">The Story of Newark’s Water: A Victory for Environmental Justice</h2>
+<p><img src="/images/newark.jpg" alt="Newark, NJ">
+Imagine this: you turn on your kitchen faucet, expecting a clean glass of water, but instead, the water looks discolored or tastes strange. For many families in Newark, New Jersey, this wasn’t a scary &ldquo;what if?&rdquo; – it was their everyday reality.</p>
+<p>But how did Newark turn things around and get safe water for everyone? To understand that, we need to look at a bigger picture – the story of water in cities across America.</p>
+<h3 id="the-hidden-danger-lead-pipes">The Hidden Danger: Lead Pipes</h3>
+<p>For decades, many U.S. cities used a metal called lead to make the pipes that connect water mains (the big pipes in the street) to individual homes. Lead is a dangerous substance called a <strong>neurotoxin</strong> – it’s a poison that attacks your brain and nervous system. It&rsquo;s especially harmful to children because it can cause lasting problems with learning, behavior, and even physical growth.</p>
+<p>In 2014, the nation watched with concern as Flint, Michigan, faced a major water crisis. City leaders made changes to where their water came from without proper treatment, causing lead to leak into the water. When residents noticed brown water and a bad smell, they were told it was safe to drink – but it wasn’t! It took brave community members and scientists to prove the danger.</p>
+<h3 id="a-national-problem">A National Problem</h3>
+<p>Flint brought a lot of attention to the issue, but it wasn&rsquo;t alone. In 2016, a report called <a href="https://www.nrdc.org/resources/whats-your-water-flint-and-beyond">&ldquo;What’s in Your Water? Flint and Beyond&rdquo;</a> showed that lead contamination was a widespread problem across the United States, affecting millions of people in cities and towns. Many water systems were breaking rules designed to keep our water safe!</p>
+<h3 id="the-fight-in-newark-20162019">The Fight in Newark (2016–2019)</h3>
+<p>Newark was one of those cities. Old pipes and poor management led to high lead levels, putting thousands of families at risk, especially in lower-income Black and Latino neighborhoods.</p>
+<p>At first, the city gave out water filters, but they weren’t perfect, and many people lost trust. The community knew they deserved better – safe water was a basic right!</p>
+<h3 id="teachers-and-students-take-the-lead">Teachers and Students Take the Lead</h3>
+<p>The fight for clean water in Newark was powered by people who cared deeply about their community, especially the next generation. The <strong>Newark Education Workers (NEW) Caucus</strong> – a group of teachers and school staff – saw how lead was hurting their students’ ability to learn. They joined forces with the <a href="https://www.nrdc.org">Natural Resources Defense Council (NRDC)</a> and decided to take action!</p>
+<p>They filed a lawsuit against the city, arguing that it wasn&rsquo;t protecting its citizens. They demanded a permanent solution: replace <strong>every single</strong> lead pipe in the city!</p>
+<p>Students also played a crucial role. They shared their experiences at public meetings, created posters to raise awareness, and learned about science and government by studying water tests in their own community.</p>
+<h3 id="a-turning-point-for-leadership">A Turning Point for Leadership</h3>
+<p>The pressure from the community worked! After extensive engagement by residents of the city, Mayor Baraka partnered with these community leaders to secure a huge $120 million loan. The city made a promise: they would replace all the lead pipes for free, ensuring everyone – not just the wealthy – could have safe water.</p>
+<h3 id="a-national-model">A National Model</h3>
+<p>Experts thought replacing 23,000 pipes would take ten years. But thanks to the community’s watchful eye and the city&rsquo;s hard work, they did it in less than three years!</p>
+<p>Today, Newark’s water meets all safety standards. By speaking up and working together, the people of Newark – teachers, students, and neighbors – changed their city for the better. Their story shows that when communities stand up and work with leaders, they can achieve big victories for <strong>environmental justice</strong>!</p>
+<hr>
+<h3 id="how-students-and-teachers-took-action">How Students and Teachers Took Action</h3>
+<p>While adults filed the lawsuit, students and teachers were the ones who kept the pressure on public officials.</p>
+<ul>
+<li><strong>Testifying at Meetings:</strong> Students and teachers stood up at Newark Board of Education meetings and City Council meetings to describe how the crisis affected their daily lives in schools.</li>
+<li><strong>Creating Awareness:</strong> Teachers used the crisis as a learning tool, helping students create posters and infographics to explain what lead is and how to use water filters correctly.</li>
+</ul>
+
+                    </div>
+                    
+                    <div class="has-text-centered mt-6">
+                        <hr>
+                        <a href="/" class="button is-primary is-outlined is-large">
+                            Return to Mission Control
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> 
+
+    <script>
+        function checkPassword() {
+            const correctPassword = 'waterlead145';
+            const input = document.getElementById('passcode').value;
+
+            if (input === correctPassword) {
+                document.getElementById('loginLayout').style.display = 'none';
+                document.getElementById('contentArea').style.display = 'block';
+                window.scrollTo(0, 0);
+                return false;
+            } else {
+                const errorEl = document.getElementById('error');
+                errorEl.textContent = 'Access Denied. Please check your credentials.';
+                document.getElementById('passcode').classList.add('is-danger');
+                return false;
+            }
+        }
+    </script>
+
+    
+
+<footer class="footer footer-dark">
+  <div class="container">
+    
+    <div class="columns is-centered">
+
+      <div class="column is-4 has-text-centered">
+        <div class="footer-column">
+          <div class="footer-header">
+            <h3>Follow Us</h3>
+			<nav class="level is-mobile is-centered">
+			  <a class="level-item" href="https://github.com/scienceserves">
+				<span class="icon"><i class="fa fa-github"></i></span>
+			  </a>
+			  <a class="level-item" href="https://linkedin.com/in/kristi-pullen-fedinick">
+				<span class="icon"><i class="fa fa-linkedin"></i></span>
+			  </a>
+			</nav>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="has-text-centered" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <p class="is-size-7 light-text" style="opacity: 0.7;">
+            Image Credits: Intro Illustration by pch.vector / Freepik | About Us Illustration by vectorjuice / Freepik | Icons from flaticon
+        </p>
+    </div>
+
+  </div>
+</footer>
+</body>
+</html>

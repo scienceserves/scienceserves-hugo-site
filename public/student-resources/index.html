@@ -1,21 +1,11 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    
-
-<meta name="description" content="Hardcoded description; the author should update :)" />
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Science Serves</title>
-    
-  
-<link rel="icon" type="image/png" href="/images/favicon.png" />
-<link href="https://fonts.googleapis.com/css?family=Open&#43;Sans:400,600" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="/css/style.css">
-<link rel="stylesheet" type="text/css" href="/css/icons.css">
-
-	<style>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Resources</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
  
 .hero-body .column.is-7 figure.image {
   padding-top: 0 !important;
@@ -459,20 +449,19 @@ text-align: left;
     window.onload = setupAutoClose;
 </script>
 
-</style>
-  </head>
-    <body>
-       
+</style> 
     
-    <div id="preloader">
-      <div id="status"></div>
-    </div>
-    
+    <style>
+        .password-page-wrapper { background: #f5f5f5; min-height: 100vh; padding: 3rem 0; }
+        .login-card { border-radius: 8px; border-top: 5px solid #00d1b2; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .full-width-box { width: 100% !important; max-width: none !important; }
+        .content.is-large { font-size: 1.25rem; line-height: 1.7; color: #333; }
+        .content img { display: block; margin: 2rem auto; border-radius: 10px; max-width: 100%; height: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    </style>
+</head>
 
+<body>
     
-
-<div class="force-nav-dark" style="background-color: #F0FAFC;">
-  
 <nav class="navbar is-fresh is-transparent no-shadow" role="navigation" aria-label="main navigation">
   <div class="container">
     <div class="navbar-brand">
@@ -510,45 +499,111 @@ text-align: left;
   </div>
 </nav>
 
-</div>
 
-<section class="section" style="background-color: #F0FAFC; min-height: 90vh;">
-  <div class="container is-fluid">
-    
-    <div class="has-text-centered" style="margin-bottom: 2rem;">
-      <h1 class="title is-3" style="color: #1D5B58;">SSE4 Pipeline Analysis</h1>
-      <p class="subtitle is-6" style="color: #5d6d7e;">Spatial analysis of SSE4 data.</p>
-    </div>
+    <div class="password-page-wrapper">
+        
+        <div id="loginLayout" class="container">
+            <div class="columns is-centered">
+                <div class="column is-5-tablet is-4-desktop">
+                    
+                    <div id="passwordFormContainer" class="box login-card p-6">
+                        
+                        
 
-    <div class="container" style="max-width: 800px; margin-top: 3rem;">
-        <div class="content" style="color: #2c3e50; line-height: 1.6;">
-            
+                        <h1 class="title is-4 has-text-centered">Student Resources</h1>
+                        <p class="subtitle is-6 has-text-centered">Enter the password to access secure files.</p>
+                        <hr>
+                        
+                        <form id="passwordForm" onsubmit="return checkPassword()">
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-medium" type="password" id="passcode" placeholder="Password" required>
+                                </div>
+                                <p id="error" class="help is-danger"></p>
+                            </div>
+                            <button type="submit" class="button is-primary is-fullwidth is-medium">Unlock Resources</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <div id="contentArea" style="display: none;">
+            <div class="container is-fluid px-5">
+                <div class="box p-6 full-width-box">
+                    <div class="content is-large">
+                        <h3 id="game-information">Game Information</h3>
+<p>Step into the shoes of an environmental health investigator in &lsquo;Metro City&rsquo;! This engaging escape room activity challenges you to solve a critical case, using logic and problem-solving skills to protect the community. Inspired by real-world environmental challenges, this activity gives you a taste of what it’s like to be an environmental scientist – using science and critical thinking to solve problems and make a positive impact.</p>
+<p><a href="/protected/metrocityscientist.pdf">Download the Game</a></p>
+<p>Have you completed your investigation?
+Log into <a href="../metro-city-department-of-public-health/">Metro City Department of Public Health System</a>
+to find out</p>
+
+                    </div>
+                    
+                    <div class="has-text-centered mt-6">
+                        <hr>
+                        <a href="/" class="button is-primary is-outlined is-large">
+                            Return to Mission Control
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> 
+
+    <script>
+        function checkPassword() {
+            const correctPassword = 'science';
+            const input = document.getElementById('passcode').value;
+
+            if (input === correctPassword) {
+                document.getElementById('loginLayout').style.display = 'none';
+                document.getElementById('contentArea').style.display = 'block';
+                window.scrollTo(0, 0);
+                return false;
+            } else {
+                const errorEl = document.getElementById('error');
+                errorEl.textContent = 'Access Denied. Please check your credentials.';
+                document.getElementById('passcode').classList.add('is-danger');
+                return false;
+            }
+        }
+    </script>
+
+    
+
+<footer class="footer footer-dark">
+  <div class="container">
+    
+    <div class="columns is-centered">
+
+      <div class="column is-4 has-text-centered">
+        <div class="footer-column">
+          <div class="footer-header">
+            <h3>Follow Us</h3>
+			<nav class="level is-mobile is-centered">
+			  <a class="level-item" href="https://github.com/scienceserves">
+				<span class="icon"><i class="fa fa-github"></i></span>
+			  </a>
+			  <a class="level-item" href="https://linkedin.com/in/kristi-pullen-fedinick">
+				<span class="icon"><i class="fa fa-linkedin"></i></span>
+			  </a>
+			</nav>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div style="text-align: center; margin-top: 2rem;">
-        <a href="/maps" class="button is-small is-text" style="color: #1D5B58; text-decoration: none;">
-            ← Back to All Maps
-        </a>
+    <div class="has-text-centered" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <p class="is-size-7 light-text" style="opacity: 0.7;">
+            Image Credits: Intro Illustration by pch.vector / Freepik | About Us Illustration by vectorjuice / Freepik | Icons from flaticon
+        </p>
     </div>
 
   </div>
-</section>
-
-<style>
-.force-nav-dark .navbar-item,
-.force-nav-dark .navbar-link { color: #1D5B58 !important; }
-.force-nav-dark .navbar-item:hover { color: #FF6B35 !important; }
-</style>
-
-
-
-    
-    <div id="backtotop"><a href="#"></a></div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://unpkg.com/feather-icons"></script>
-<script src="/js/fresh.js"></script>
-<script src="/js/jquery.panelslider.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-
+</footer>
+</body>
+</html>

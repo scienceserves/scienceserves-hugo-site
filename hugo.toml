@@ -42,6 +42,10 @@ theme = "hugo-fresh"
   [[params.navbar]]
     title = "Maps"
     url = "/maps"
+
+  [[params.navbar]]
+    title = "Students"
+    url = "/student-resources/"
   
   [[params.navbar]]
     title = "Contact"

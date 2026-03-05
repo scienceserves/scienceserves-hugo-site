@@ -10,9 +10,13 @@
   </url><url>
     <loc>http://localhost:1313/maps/</loc>
   </url><url>
+    <loc>http://localhost:1313/metro-city-department-of-public-health/</loc>
+  </url><url>
     <loc>http://localhost:1313/</loc>
   </url><url>
     <loc>http://localhost:1313/maps/sse4/</loc>
+  </url><url>
+    <loc>http://localhost:1313/student-resources/</loc>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
   </url>
