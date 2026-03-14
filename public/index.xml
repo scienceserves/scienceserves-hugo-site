@@ -8,6 +8,13 @@
     <language>en-us</language>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Image Credits</title>
+      <link>http://localhost:1313/credits/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/credits/</guid>
+      <description>&lt;h1 id=&#34;image-credits&#34;&gt;Image Credits&lt;/h1&gt;&#xA;&lt;p&gt;We are grateful for the open-source and creative work that supports our mission at CS³.&lt;/p&gt;&#xA;&lt;h2 id=&#34;illustrations&#34;&gt;Illustrations&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Intro Illustration:&lt;/strong&gt; pch.vector / Freepik&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;About Us Illustration:&lt;/strong&gt; vectorjuice / Freepik&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;icons&#34;&gt;Icons&lt;/h2&gt;&#xA;&lt;p&gt;Icons sourced from flaticon.com (License: Free)&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Communities at Risk: The Proposed MSX Pipeline Route</title>
       <link>http://localhost:1313/maps/msx/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -27,6 +34,13 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/metro-city-department-of-public-health/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/mcdph.png&#34; alt=&#34;Metro City DPH&#34;&gt;&lt;/p&gt;&#xA;&lt;h1 id=&#34;excellent-work-recruit&#34;&gt;Excellent work, recruit!&lt;/h1&gt;&#xA;&lt;p&gt;You’ve successfully identified the source of the contamination and helped us resolve this critical issue in Metro City. Your sharp mind, excellent problem solving skills, and dedication have made a real difference.&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&amp;ldquo;This is just the beginning. You’ve demonstrated a remarkable aptitude for environmental health work, and I believe you all have bright futures ahead of you in this vital field.&amp;rdquo;&lt;/p&gt;&#xA;&lt;p&gt;— &lt;strong&gt;Dr. Loretta Vance&lt;/strong&gt;, Environmental Health Investigations Team Manager&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Privacy Policy</title>
+      <link>http://localhost:1313/privacy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/privacy/</guid>
+      <description>&lt;h1 id=&#34;privacy-policy&#34;&gt;Privacy Policy&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Introduction&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;At the Center for Science, Service, and Solidarity (CS³), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and share information when you visit our website (scienceserves.org) or interact with us.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;What Information We Collect&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;We primarily use GoatCounter, a privacy-focused analytics service, to understand how visitors use our website. GoatCounter collects anonymous data such as page views and referrer URLs, which helps us improve the site&amp;rsquo;s performance and content. We do &lt;em&gt;not&lt;/em&gt; collect any personally identifiable information (PII) such as names, email addresses, or IP addresses. GoatCounter anonymizes data by truncating IP addresses to a 16-bit value.&lt;/p&gt;</description>
     </item>
     <item>
       <title>SSE4 Pipeline Analysis</title>

@@ -462,40 +462,32 @@ text-align: left;
 
 <body>
     
-<nav class="navbar is-fresh is-transparent no-shadow" role="navigation" aria-label="main navigation">
+
+<nav class="navbar is-fresh is-transparent no-shadow" role="navigation">
   <div class="container">
     <div class="navbar-brand">
-      <a class="navbar-item" href="/">
-        <img src="/images/images/logo.png" alt="" width="112" height="28">
-      </a>
+      
+        <a class="navbar-item has-text-weight-bold" href="/">
+          <img src="/images/images/logo.png" alt="" width="112" height="28">
+        </a>
+
+      
 
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
       </a>
     </div>
 
-      <div id="navbar-menu" class="navbar-menu is-static">
+    <div id="navbar-menu" class="navbar-menu is-static">
 
-        <div class="navbar-end">
-          <a href="/#section1" class="navbar-item is-secondary">
-            Mission
-          </a>
-          <a href="/#section2" class="navbar-item is-secondary">
-            About
-          </a>
-          <a href="/maps" class="navbar-item is-secondary">
-            Maps
-          </a>
-          <a href="/student-resources/" class="navbar-item is-secondary">
-            Students
-          </a>
-          <a href="/#section4" class="navbar-item is-secondary">
-            Contact
-          </a>
-        </div>
+      <div class="navbar-end">
+        <a href="/#section1" class="navbar-item is-secondary">Mission</a>
+        <a href="/#section2" class="navbar-item is-secondary">About</a>
+        <a href="/maps" class="navbar-item is-secondary">Maps</a>
+        <a href="/student-resources/" class="navbar-item is-secondary">Students</a>
+        <a href="/#section4" class="navbar-item is-secondary">Contact</a>
       </div>
+    </div>
   </div>
 </nav>
 
@@ -634,12 +626,20 @@ Imagine this: you turn on your kitchen faucet, expecting a clean glass of water,
     </div>
 
     <div class="has-text-centered" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-        <p class="is-size-7 light-text" style="opacity: 0.7;">
-            Image Credits: Intro Illustration by pch.vector / Freepik | About Us Illustration by vectorjuice / Freepik | Icons from flaticon
-        </p>
+        
+        <a href="/credits/" class="footer-links">Image Credits</a> | 
+        <a href="/privacy/" class="footer-links">Privacy Policy</a>
+
+        
+        <div class="privacy-notice">
+          <p class="is-size-6 light-text" style="opacity: 0.7;">
+            We use <a href="https://goatcounter.com/" target="_blank" rel="noopener noreferrer">Goat Counter</a> to track site usage and improve user engagement. Please see our <a href="/privacy/">Privacy Policy</a> for more information.
+          </p>
+        </div>
     </div>
 
   </div>
 </footer>
+
 </body>
 </html>

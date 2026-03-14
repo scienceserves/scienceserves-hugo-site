@@ -3,11 +3,18 @@
   <head>
     {{ partial "meta.html" . }}
     <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+    
+    <!-- Load theme CSS first -->
     {{ partial "css.html" . }}
-	{{ partial "custom-head.html" . }}
+    
+    <!-- CRITICAL: Add your custom CSS link here (MUST be after theme CSS) -->
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    {{ partial "custom-head.html" . }}
   </head>
-    <body>
-       {{ if ne .Site.Params.preloader false }}
+  
+  <body>
+     {{ if ne .Site.Params.preloader false }}
     <!-- Preloader -->
     <div id="preloader">
       <div id="status"></div>
@@ -21,3 +28,5 @@
     <div id="backtotop"><a href="#"></a></div>
 
     {{ partial "javascript.html" . }}
+  </body>
+</html>

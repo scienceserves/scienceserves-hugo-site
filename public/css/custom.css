@@ -1,14 +1,77 @@
-/* Custom CSS to force columns to wrap sooner than Bulma's default 
-   This fixes overflow issues when the browser is zoomed or at a narrow desktop width. */
+/* ========================================
+   Footer Styles - Privacy & Credits Links
+   ======================================== */
+
+/* Social Media Links in Footer */
+.footer-dark .footer-column .footer-header nav.level a {
+    color: rgb(253, 99, 56) !important; /* Orange-red for social icons */
+}
+
+.footer-dark .footer-column .footer-header nav.level a:hover {
+    color: #ff8c42 !important; /* Lighter orange on hover */
+}
+
+/* Social Media Title (h3) */
+.footer-dark .footer-column .footer-header h3 {
+    color: rgb(253, 99, 56) !important;
+}
+
+/* Copyright/Credits Text */
+.footer-dark .container > div.has-text-centered p {
+    color: rgb(253, 99, 56) !important;
+}
+
+.footer-dark .container > div.has-text-centered a {
+    color: rgb(253, 99, 56) !important;
+}
+
+.footer-dark .container > div.has-text-centered a:hover {
+    color: #ff8c42 !important; /* Lighter orange on hover */
+    text-decoration: underline;
+}
+
+/* ========================================
+   Privacy Notice (GoatCounter) Styles
+   ======================================== */
+.footer-dark .privacy-notice {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    text-align: center;
+}
+
+.footer-dark .privacy-notice p {
+    opacity: 0.7;
+    font-size: 0.875rem; /* Equivalent to is-size-6 */
+    line-height: 1.4;
+}
+
+/* ========================================
+   Responsive Fixes (Your existing code)
+   ======================================== */
 @media screen and (max-width: 1100px) {
-    /* Target the columns wrapper to ensure wrapping at 1100px */
     .responsive-fix-columns {
         flex-wrap: wrap; 
     }
     
-    /* Target the individual columns within the wrapper */
     .responsive-fix-columns > .column {
-        /* Force each column to take exactly half the width (50%) */
         width: 50% !important;
     }
+}
+
+/* ========================================
+   Additional Footer Spacing (Optional)
+   ======================================== */
+.footer-dark {
+    padding-bottom: 2rem; /* Add extra space at bottom of footer */
+}
+
+/* ========================================
+   GLOBAL FOOTER LINK OVERRIDE (Remove if above works)
+   ======================================== */
+footer a, .footer a {
+    color: rgb(253, 99, 56) !important;
+}
+
+footer a:hover, .footer a:hover {
+    color: #ff8c42 !important; /* Lighter orange on hover */
 }

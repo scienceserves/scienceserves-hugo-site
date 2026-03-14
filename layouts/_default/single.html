@@ -1,8 +1,6 @@
-<!-- layouts/_default/single.html -->
 {{ define "main" }}
-  {{ partial "custom-head.html" . }}
-  
-  {{ partial "header.html" . }} <!-- Include the shared header -->
+{{ partial "custom-head.html" . }}
+    {{ partial "navbar.html" . }}
 
   <section class="section">
     <div class="container">
@@ -14,9 +12,5 @@
 
   {{ if .Params.include_footer }}
     {{ partial "footer.html" . }}
-  {{ end }}
-
-  {{ if .Params.sidebar }}
-    {{ partial "single/sidebar.html" . }}
   {{ end }}
 {{ end }}
