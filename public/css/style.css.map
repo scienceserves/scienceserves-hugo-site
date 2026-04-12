@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "style.css",
-	"sourceRoot": "/Volumes/4TB/KristiStuff/cs3/website/scienceserves_030726",
+	"sourceRoot": "/Volumes/4TB/KristiStuff/cs3/website/scienceserves_031426",
 	"sources": [
 		"/Users/kristi/Library/Caches/hugo_cache/modules/filecache/modules/pkg/mod/github.com/!stef!ma/hugo-fresh@v1.2.1-0.20251001111512-5cd3737fb8cf/assets/style.sass",
 		"../../../../../../Users/kristi/Library/Caches/hugo_cache/modules/filecache/modules/pkg/mod/github.com/jgthms/bulma@v0.0.0-20220508134905-3e00a8e6d0d0/bulma.sass",

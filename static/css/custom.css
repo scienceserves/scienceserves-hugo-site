@@ -1,53 +1,107 @@
 /* ========================================
-   Footer Styles - Privacy & Credits Links
+   FOOTER TEXT COLOR - TARGETED SELECTIONS
    ======================================== */
 
-/* Social Media Links in Footer */
-.footer-dark .footer-column .footer-header nav.level a {
-    color: rgb(253, 99, 56) !important; /* Orange-red for social icons */
+/* 1. Social Media Title (h3) */
+.footer-dark .footer-header h3 {
+    color: #ffffff !important;
 }
 
-.footer-dark .footer-column .footer-header nav.level a:hover {
-    color: #ff8c42 !important; /* Lighter orange on hover */
+/* 2. Social Media Icons & Links */
+.footer-dark .footer-header nav.level a span.icon i,
+.footer-dark .footer-header nav.level a {
+    color: #ffffff !important;
+    
+    &:hover {
+        color: #e0e0e0 !important; /* Light grey on hover for better UX */
+    }
 }
 
-/* Social Media Title (h3) */
-.footer-dark .footer-column .footer-header h3 {
-    color: rgb(253, 99, 56) !important;
+/* 3. Image Credits & Privacy Policy Links - UNDERLINED */
+.footer-links {
+    color: #ffffff !important;
+    text-decoration: underline; /* ADD THIS LINE */
+    
+    &:hover {
+        color: #e0e0e0 !important; /* Light grey on hover for better UX */
+        text-decoration: none; /* Remove underline on hover (optional) */
+    }
 }
 
-/* Copyright/Credits Text */
-.footer-dark .container > div.has-text-centered p {
-    color: rgb(253, 99, 56) !important;
+/* 4. GoatCounter Notice Text (was blue) */
+.footer-dark .privacy-notice p {
+    opacity: 0.7;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    
+    /* Override color to white with transparency */
+    color: rgba(255, 255, 255, 0.7) !important;
 }
 
-.footer-dark .container > div.has-text-centered a {
-    color: rgb(253, 99, 56) !important;
-}
-
-.footer-dark .container > div.has-text-centered a:hover {
-    color: #ff8c42 !important; /* Lighter orange on hover */
-    text-decoration: underline;
+/* 5. GoatCounter Link in Privacy Notice - UNDERLINED */
+.footer-dark .privacy-notice a {
+    color: rgba(255, 255, 255, 0.7) !important;
+    text-decoration: underline; /* ADD THIS LINE */
+    
+    &:hover {
+        color: #ffffff !important;
+        text-decoration: none; /* Remove underline on hover (optional) */
+    }
 }
 
 /* ========================================
-   Privacy Notice (GoatCounter) Styles
+   LEGAL NOTICE - EXTERNAL CSS (BEST PRACTICE)
    ======================================== */
+
+.footer-dark .legal-notice {
+    background-color: transparent;
+    margin-top: 0;
+    padding: 40px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    
+    p {
+        font-size: 0.8rem;
+        color: #ffffff;
+        line-height: 1.6;
+        text-align: center;
+        max-width: 650px; /* Reduced from 850px for better readability */
+        margin: 0 auto;
+        font-family: sans-serif;
+    }
+    
+    .legal-notice-title {
+        letter-spacing: 1px;
+        font-weight: 800;
+        color: #ffffff;
+        display: block;
+        margin-bottom: 10px;
+        text-decoration: underline;
+    }
+}
+
+.footer-dark strong {
+    color: #ffffff !important;
+    font-weight: 800;
+}
+
+/* ========================================
+   FOOTER SPACING & LAYOUT (Optional)
+   ======================================== */
+
+.footer-dark {
+    padding-bottom: 2rem; /* Add extra space at bottom of footer */
+}
+
 .footer-dark .privacy-notice {
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
     text-align: center;
 }
 
-.footer-dark .privacy-notice p {
-    opacity: 0.7;
-    font-size: 0.875rem; /* Equivalent to is-size-6 */
-    line-height: 1.4;
-}
-
 /* ========================================
-   Responsive Fixes (Your existing code)
+   RESPONSIVE FIXES (Your existing code)
    ======================================== */
+
 @media screen and (max-width: 1100px) {
     .responsive-fix-columns {
         flex-wrap: wrap; 
@@ -56,22 +110,4 @@
     .responsive-fix-columns > .column {
         width: 50% !important;
     }
-}
-
-/* ========================================
-   Additional Footer Spacing (Optional)
-   ======================================== */
-.footer-dark {
-    padding-bottom: 2rem; /* Add extra space at bottom of footer */
-}
-
-/* ========================================
-   GLOBAL FOOTER LINK OVERRIDE (Remove if above works)
-   ======================================== */
-footer a, .footer a {
-    color: rgb(253, 99, 56) !important;
-}
-
-footer a:hover, .footer a:hover {
-    color: #ff8c42 !important; /* Lighter orange on hover */
 }

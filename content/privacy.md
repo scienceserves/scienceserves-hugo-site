@@ -1,5 +1,6 @@
 ---
 title: "Privacy Policy"
+include_footer: true
 type: page
 ---
 
@@ -46,3 +47,5 @@ info@scienceserves.org
 **Updates to this Privacy Policy**
 
 We may update this Privacy Policy from time to time. We will notify you of any changes by posting the updated policy on this page.
+
+
